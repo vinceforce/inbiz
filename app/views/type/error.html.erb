@@ -1,0 +1,7 @@
+<h1>Erreur - Gestion des types (<a href="/refdatabo/types/">Retour à la liste</a>)</h1>
+MAR_TYP_LIB_TX : <%= @new_type.errors[:MAR_TYP_LIB_TX].first %><br/>
+MAR_TYP_IDENT_NM : <%= @new_type.errors[:MAR_TYP_IDENT_NM].first %><br/>
+title - <%= @new_type.errors[:title].first %><br/>
+<% @new_type.errors.each do |error| %>
+<%= error.first%><br/>
+<% end %>

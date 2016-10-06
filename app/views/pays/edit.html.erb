@@ -1,0 +1,13 @@
+<h1>Modification</h1>
+
+<%= form_tag "/refdatabo/pays/#{@pays.MAR_PAYS_IDENT_NM}", method: "patch" do %>
+  <input type="text" name="MAR_PAYS_LIB_TX" value="<%= @pays.MAR_PAYS_LIB_TX %>" placeholder="Libellé"/>
+  <%= @pays.errors[:title].first %>
+  <input type="submit" value="Modifier" />
+<% end %>
+
+<%= form_tag "/refdatabo/pays/#{@pays.MAR_PAYS_IDENT_NM}", method: "delete" do %>
+  <input type="submit" value="Supprimer" />
+<% end %>
+
+<p><a href="/refdatabo/pays/">Retourner à la liste</a></p>

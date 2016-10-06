@@ -1,0 +1,10 @@
+<h1>Liste des marques</h1>
+<% @marques.each do |marque| %>
+<h2><%=marque.MAR_MARQUES_NOM_TX%></h2>
+  <% @liensContact.where(MAR_MARQUES_IDENT_NM: marque.MAR_MARQUES_IDENT_NM).each do |lienContact| %>
+    <p>
+    <%=lienContact.CONT_CONTACTS_IDENT_NM%> - <%=@contacts.where(CONT_CONTACTS_IDENT_NM: lienContact.CONT_CONTACTS_IDENT_NM).first().CONT_CONTACTS_MAIL_TX%>
+    </p>
+  <% end %>
+
+<% end %>

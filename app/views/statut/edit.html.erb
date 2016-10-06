@@ -1,0 +1,13 @@
+<h1>Modification</h1>
+
+<%= form_tag "/refdatabo/statuts/#{@statut.MAR_STA_IDENT_NM}", method: "patch" do %>
+  <input type="text" name="MAR_STA_LIB_TX" value="<%= @statut.MAR_STA_LIB_TX %>" placeholder="Libellé"/>
+  <%= @statut.errors[:title].first %>
+  <input type="submit" value="Modifier" />
+<% end %>
+
+<%= form_tag "/refdatabo/statuts/#{@statut.MAR_STA_IDENT_NM}", method: "delete" do %>
+  <input type="submit" value="Supprimer" />
+<% end %>
+
+<p><a href="/refdatabo/statuts/">Retourner à la liste</a></p>

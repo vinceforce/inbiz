@@ -1,0 +1,2 @@
+module StatutHelper
+end

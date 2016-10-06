@@ -1,0 +1,2 @@
+module StatutJuridiqueHelper
+end

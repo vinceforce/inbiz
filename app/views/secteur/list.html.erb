@@ -1,0 +1,20 @@
+<h1>Gestion des secteurs (<a href="/refdatabo/">Retour</a>)</h1>
+<h2>Créer</h2>
+<%= form_tag '/refdatabo/secteurs', method: 'post' do %>
+  <input type="text" name="MAR_SEC_LIB_TX" placeholder="Libellé"/>
+  <input type="submit" value="Ajouter" />
+<% end %>
+
+<h2>Liste</h2>
+
+<% @listesecteurs.each do |secteur| %>
+  <p>
+    <a href="/refdatabo/secteurs/<%= secteur.MAR_SEC_IDENT_NM %>"><%= secteur.MAR_SEC_LIB_TX %></a>
+  </p>
+<% end %>
+
+<h2>Créer</h2>
+<%= form_tag '/refdatabo/secteurs', method: 'post' do %>
+  <input type="text" name="MAR_SEC_LIB_TX" placeholder="Libellé"/>
+  <input type="submit" value="Ajouter" />
+<% end %>
