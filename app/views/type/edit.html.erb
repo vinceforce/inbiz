@@ -1,12 +1,12 @@
 <h1>Modification</h1>
 
-<%= form_tag "/refdatabo/types/#{@type.MAR_TYP_IDENT_NM}", method: "patch" do %>
-  <input type="text" name="MAR_TYP_LIB_TX" value="<%= @type.MAR_TYP_LIB_TX %>" placeholder="Libellé"/>
+<%= form_tag "/refdatabo/types/#{@type.mar_typ_ident_nm}", method: "patch" do %>
+  <input type="text" name="mar_typ_lib_tx" value="<%= @type.mar_typ_lib_tx %>" placeholder="Libellé"/>
   <%= @type.errors[:title].first %>
   <input type="submit" value="Modifier" />
 <% end %>
 
-<%= form_tag "/refdatabo/types/#{@type.MAR_TYP_IDENT_NM}", method: "delete" do %>
+<%= form_tag "/refdatabo/types/#{@type.mar_typ_ident_nm}", method: "delete" do %>
   <input type="submit" value="Supprimer" />
 <% end %>
 

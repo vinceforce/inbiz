@@ -8,7 +8,7 @@ class PaysController < ApplicationController
   end
 
   def create
-    @new_pays = Pays.create MAR_PAYS_LIB_TX: params[:MAR_PAYS_LIB_TX]
+    @new_pays = Pays.create mar_pays_lib_tx: params[:mar_pays_lib_tx]
     if @new_pays.errors
       # render :list
       redirect_to "/refdatabo/pays/"
@@ -19,7 +19,7 @@ class PaysController < ApplicationController
 
   def update
     @pays = Pays.find(params[:id])
-    if @pays.update MAR_PAYS_LIB_TX: params[:MAR_PAYS_LIB_TX]
+    if @pays.update mar_pays_lib_tx: params[:mar_pays_lib_tx]
       redirect_to "/refdatabo/pays/#{params[:id]}"
     else
       render :edit

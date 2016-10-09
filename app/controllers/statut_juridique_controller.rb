@@ -8,7 +8,7 @@ class StatutJuridiqueController < ApplicationController
   end
 
   def create
-    @new_statut_juridique = StatutJuridique.create MAR_STA_JUR_LIB_TX: params[:MAR_STA_JUR_LIB_TX]
+    @new_statut_juridique = StatutJuridique.create mar_sta_jur_lib_tx: params[:mar_sta_jur_lib_tx]
     if @new_statut_juridique.errors
       # render :list
       redirect_to "/refdatabo/statuts_juridiques/"
@@ -19,7 +19,7 @@ class StatutJuridiqueController < ApplicationController
 
   def update
     @statutjuridique = StatutJuridique.find(params[:id])
-    if @statutjuridique.update MAR_STA_JUR_LIB_TX: params[:MAR_STA_JUR_LIB_TX]
+    if @statutjuridique.update mar_sta_jur_lib_tx: params[:mar_sta_jur_lib_tx]
       redirect_to "/refdatabo/statuts_juridiques/#{params[:id]}"
     else
       render :edit

@@ -1,12 +1,12 @@
 <h1>Modification</h1>
 
-<%= form_tag "/refdatabo/secteurs/#{@secteur.MAR_SEC_IDENT_NM}", method: "patch" do %>
-  <input type="text" name="MAR_SEC_LIB_TX" value="<%= @secteur.MAR_SEC_LIB_TX %>" placeholder="Libellé"/>
+<%= form_tag "/refdatabo/secteurs/#{@secteur.mar_sec_ident_nm}", method: "patch" do %>
+  <input type="text" name="mar_sec_lib_tx" value="<%= @secteur.mar_sec_lib_tx %>" placeholder="Libellé"/>
   <%= @secteur.errors[:title].first %>
   <input type="submit" value="Modifier" />
 <% end %>
 
-<%= form_tag "/refdatabo/secteurs/#{@secteur.MAR_SEC_IDENT_NM}", method: "delete" do %>
+<%= form_tag "/refdatabo/secteurs/#{@secteur.mar_sec_ident_nm}", method: "delete" do %>
   <input type="submit" value="Supprimer" />
 <% end %>
 

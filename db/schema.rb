@@ -15,95 +15,95 @@ ActiveRecord::Schema.define(version: 0) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "APP_CONT_CONTACTS", primary_key: "CONT_CONTACTS_IDENT_NM", id: :bigserial, force: :cascade do |t|
-    t.string   "CONT_CONTACTS_NOM_TX",               limit: 50
-    t.string   "CONT_CONTACTS_PRENOM_TX",            limit: 50
-    t.string   "CONT_CONTACTS_SOCIETE_TX",           limit: 100
-    t.string   "CONT_CONTACTS_MAIL_TX",              limit: 255
-    t.string   "CONT_CONTACTS_TEL_MOBILE_TX",        limit: 50
-    t.string   "CONT_CONTACTS_TEL_FIXE_TX",          limit: 50
-    t.string   "CONT_CONTACTS_FACEBOOK_TX",          limit: 255
-    t.string   "CONT_CONTACTS_COMP_METIERS_TX",      limit: 500
-    t.string   "CONT_CONTACTS_CONN_SECT_TX",         limit: 500
-    t.string   "CONT_CONTACTS_INTERETS_TX",          limit: 500
-    t.string   "CONT_CONTACTS_STATUT_TX",            limit: 5
-    t.string   "CONT_CONTACTS_MAJ_USER_TX",          limit: 100
-    t.datetime "CONT_CONTACTS_MAJ_DATE_DT"
-    t.string   "CONT_CONTACTS_GOOGLEID_TX",          limit: 50
-    t.string   "CONT_CONTACTS_FAX_TX",               limit: 50
-    t.string   "CONT_CONTACTS_FONCTION_TX",          limit: 50
-    t.string   "CONT_CONTACTS_DIRECTION_SERVICE_TX", limit: 100
-    t.string   "CONT_CONTACTS_POUVOIR_TX",           limit: 100
-    t.integer  "CONT_CONTACTS_PROJETS_REALISES_NM"
-    t.string   "CONT_CONTACTS_CIVILITE_TX",          limit: 20
-    t.string   "CONT_CONTACTS_LINKEDIN_TX",          limit: 255
+  create_table "app_cont_contacts", primary_key: "cont_contacts_ident_nm", id: :bigserial, force: :cascade do |t|
+    t.string   "cont_contacts_nom_tx",               limit: 50
+    t.string   "cont_contacts_prenom_tx",            limit: 50
+    t.string   "cont_contacts_societe_tx",           limit: 100
+    t.string   "cont_contacts_mail_tx",              limit: 255
+    t.string   "cont_contacts_tel_mobile_tx",        limit: 50
+    t.string   "cont_contacts_tel_fixe_tx",          limit: 50
+    t.string   "cont_contacts_facebook_tx",          limit: 255
+    t.string   "cont_contacts_comp_metiers_tx",      limit: 500
+    t.string   "cont_contacts_conn_secteur_tx",         limit: 500
+    t.string   "cont_contacts_interets_tx",          limit: 500
+    t.string   "cont_contacts_statut_tx",            limit: 5
+    t.string   "cont_contacts_maj_user_tx",          limit: 100
+    t.datetime "cont_contacts_maj_date_dt"
+    t.string   "cont_contacts_googleid_tx",          limit: 50
+    t.string   "cont_contacts_fax_tx",               limit: 50
+    t.string   "cont_contacts_fonction_tx",          limit: 50
+    t.string   "cont_contacts_direction_service_tx", limit: 100
+    t.string   "cont_contacts_pouvoir_tx",           limit: 100
+    t.integer  "cont_contacts_projets_realises_nm"
+    t.string   "cont_contacts_civilite_tx",          limit: 20
+    t.string   "cont_contacts_linkedin_tx",          limit: 255
   end
 
-  create_table "APP_MAR_CONTACTS", primary_key: ["MAR_MARQUES_IDENT_NM", "CONT_CONTACTS_IDENT_NM"], force: :cascade do |t|
-    t.bigint  "MAR_MARQUES_IDENT_NM",                  null: false
-    t.bigint  "CONT_CONTACTS_IDENT_NM",                null: false
-    t.string  "MAR_CONT_TYPE_TX",          limit: 8
-    t.string  "MAR_CONT_RELATION_TX",      limit: 300
-    t.boolean "MAR_CONT_DESIGN_BL"
-    t.boolean "MAR_CONT_MARKETING_BL"
-    t.boolean "MAR_CONT_COMMUNICATION_BL"
-    t.boolean "MAR_CONT_EVENTRP_BL"
-    t.boolean "MAR_CONT_DIGITAL_BL"
-    t.index ["CONT_CONTACTS_IDENT_NM"], name: "FKI_APP_CONT_CONTACTS", using: :btree
-    t.index ["MAR_MARQUES_IDENT_NM"], name: "FKI_APP_MAR_MARQUES", using: :btree
+  create_table "app_mar_contacts", primary_key: ["mar_marques_ident_nm", "cont_contacts_ident_nm"], force: :cascade do |t|
+    t.bigint  "mar_marques_ident_nm",                  null: false
+    t.bigint  "cont_contacts_ident_nm",                null: false
+    t.string  "mar_cont_type_tx",          limit: 8
+    t.string  "mar_cont_relation_tx",      limit: 300
+    t.boolean "mar_cont_design_bl"
+    t.boolean "mar_cont_marketing_bl"
+    t.boolean "mar_cont_communication_bl"
+    t.boolean "mar_cont_event_bl"
+    t.boolean "mar_cont_digital_bl"
+    t.index ["cont_contacts_ident_nm"], name: "fki_app_cont_contacts", using: :btree
+    t.index ["mar_marques_ident_nm"], name: "fki_app_mar_marques", using: :btree
   end
 
-  create_table "APP_MAR_MARQUES", primary_key: "MAR_MARQUES_IDENT_NM", id: :bigserial, force: :cascade do |t|
-    t.string   "MAR_MARQUES_NOM_TX",         limit: 100
-    t.string   "MAR_MARQUES_LOGO_TX",        limit: 255
-    t.bigint   "MAR_STA_JUR_IDENT_NM"
-    t.bigint   "MAR_STA_IDENT_NM"
-    t.bigint   "MAR_TYP_IDENT_NM"
-    t.bigint   "MAR_SEC_IDENT_NM"
-    t.string   "MAR_MARQUES_CA_TX",          limit: 20
-    t.integer  "MAR_MARQUES_NB_SALARIES_NM"
-    t.string   "MAR_MARQUES_ADRESSE1_TX",    limit: 100
-    t.string   "MAR_MARQUES_ADRESSE2_TX",    limit: 100
-    t.string   "MAR_MARQUES_CP_TX",          limit: 10
-    t.string   "MAR_MARQUES_VILLE_TX",       limit: 100
-    t.bigint   "MAR_PAYS_IDENT_NM"
-    t.string   "MAR_MARQUES_WEB_TX",         limit: 255
-    t.string   "MAR_MARQUES_TWITTER_TX",     limit: 255
-    t.string   "MAR_MARQUES_FACEBOOK_TX",    limit: 255
-    t.string   "MAR_MARQUES_MAJ_USER_TX",    limit: 50
-    t.datetime "MAR_MARQUES_MAJ_DATE_DT"
-    t.index ["MAR_PAYS_IDENT_NM"], name: "FKI_MARQUE_PAYS", using: :btree
-    t.index ["MAR_SEC_IDENT_NM"], name: "FKI_MARQUE_SECTEUR", using: :btree
-    t.index ["MAR_STA_IDENT_NM"], name: "FKI_MARQUE_STATUT", using: :btree
-    t.index ["MAR_STA_JUR_IDENT_NM"], name: "FKI_MARQUE_STATUT_JURIDIQUE", using: :btree
-    t.index ["MAR_TYP_IDENT_NM"], name: "FKI_MARQUE_TYPE", using: :btree
+  create_table "app_mar_marques", primary_key: "mar_marques_ident_nm", id: :bigserial, force: :cascade do |t|
+    t.string   "mar_marques_nom_tx",         limit: 100
+    t.string   "mar_marques_logo_tx",        limit: 255
+    t.bigint   "mar_sta_jur_ident_nm"
+    t.bigint   "mar_sta_ident_nm"
+    t.bigint   "mar_typ_ident_nm"
+    t.bigint   "mar_sec_ident_nm"
+    t.string   "mar_marques_ca_tx",          limit: 20
+    t.integer  "mar_marques_nb_salaries_nm"
+    t.string   "mar_marques_adresse1_tx",    limit: 100
+    t.string   "mar_marques_adresse2_tx",    limit: 100
+    t.string   "mar_marques_cp_tx",          limit: 10
+    t.string   "mar_marques_ville_tx",       limit: 100
+    t.bigint   "mar_pays_ident_nm"
+    t.string   "mar_marques_web_tx",         limit: 255
+    t.string   "mar_marques_twitter_tx",     limit: 255
+    t.string   "mar_marques_facebook_tx",    limit: 255
+    t.string   "mar_marques_maj_user_tx",    limit: 50
+    t.datetime "mar_marques_maj_date_dt"
+    t.index ["mar_pays_ident_nm"], name: "fki_marque_pays", using: :btree
+    t.index ["mar_sec_ident_nm"], name: "fki_marque_secteur", using: :btree
+    t.index ["mar_sta_ident_nm"], name: "fki_marque_statut", using: :btree
+    t.index ["mar_sta_jur_ident_nm"], name: "fki_marque_statut_juridique", using: :btree
+    t.index ["mar_typ_ident_nm"], name: "fki_marque_type", using: :btree
   end
 
-  create_table "RFS_MAR_PAYS", primary_key: "MAR_PAYS_IDENT_NM", id: :bigserial, force: :cascade do |t|
-    t.string "MAR_PAYS_LIB_TX", limit: 60
+  create_table "rfs_mar_pays", primary_key: "mar_pays_ident_nm", id: :bigserial, force: :cascade do |t|
+    t.string "mar_pays_lib_tx", limit: 60
   end
 
-  create_table "RFS_MAR_SECTEURS", primary_key: "MAR_SEC_IDENT_NM", id: :bigserial, force: :cascade do |t|
-    t.string "MAR_SEC_LIB_TX", limit: 50
+  create_table "rfs_mar_secteurs", primary_key: "mar_sec_ident_nm", id: :bigserial, force: :cascade do |t|
+    t.string "mar_sec_lib_tx", limit: 50
   end
 
-  create_table "RFS_MAR_STATUTS", primary_key: "MAR_STA_IDENT_NM", id: :bigserial, force: :cascade do |t|
-    t.string "MAR_STA_LIB_TX", limit: 20
+  create_table "rfs_mar_statuts", primary_key: "mar_sta_ident_nm", id: :bigserial, force: :cascade do |t|
+    t.string "mar_sta_lib_tx", limit: 20
   end
 
-  create_table "RFS_MAR_STATUTS_JURIDIQUES", primary_key: "MAR_STA_JUR_IDENT_NM", id: :bigserial, force: :cascade do |t|
-    t.string "MAR_STA_JUR_LIB_TX", limit: 50
+  create_table "rfs_mar_statuts_juridiques", primary_key: "mar_sta_jur_ident_nm", id: :bigserial, force: :cascade do |t|
+    t.string "mar_sta_jur_lib_tx", limit: 50
   end
 
-  create_table "RFS_MAR_TYPES", primary_key: "MAR_TYP_IDENT_NM", id: :bigserial, force: :cascade do |t|
-    t.string "MAR_TYP_LIB_TX", limit: 30
+  create_table "rfs_mar_types", primary_key: "mar_typ_ident_nm", id: :bigserial, force: :cascade do |t|
+    t.string "mar_typ_lib_tx", limit: 30
   end
 
-  add_foreign_key "APP_MAR_CONTACTS", "\"APP_CONT_CONTACTS\"", column: "CONT_CONTACTS_IDENT_NM", primary_key: "CONT_CONTACTS_IDENT_NM", name: "FK_APP_CONT_CONTACTS"
-  add_foreign_key "APP_MAR_CONTACTS", "\"APP_MAR_MARQUES\"", column: "MAR_MARQUES_IDENT_NM", primary_key: "MAR_MARQUES_IDENT_NM", name: "FK_APP_MAR_MARQUES"
-  add_foreign_key "APP_MAR_MARQUES", "\"RFS_MAR_PAYS\"", column: "MAR_PAYS_IDENT_NM", primary_key: "MAR_PAYS_IDENT_NM", name: "FK_MARQUE_PAYS"
-  add_foreign_key "APP_MAR_MARQUES", "\"RFS_MAR_SECTEURS\"", column: "MAR_SEC_IDENT_NM", primary_key: "MAR_SEC_IDENT_NM", name: "FK_MARQUE_SECTEUR"
-  add_foreign_key "APP_MAR_MARQUES", "\"RFS_MAR_STATUTS\"", column: "MAR_STA_IDENT_NM", primary_key: "MAR_STA_IDENT_NM", name: "FK_MARQUE_STATUT"
-  add_foreign_key "APP_MAR_MARQUES", "\"RFS_MAR_STATUTS_JURIDIQUES\"", column: "MAR_STA_JUR_IDENT_NM", primary_key: "MAR_STA_JUR_IDENT_NM", name: "FK_MARQUE_STATUT_JURIDIQUE"
-  add_foreign_key "APP_MAR_MARQUES", "\"RFS_MAR_TYPES\"", column: "MAR_TYP_IDENT_NM", primary_key: "MAR_TYP_IDENT_NM", name: "FK_MARQUE_TYPE"
+  add_foreign_key "app_mar_contacts", "\"app_cont_contacts\"", column: "cont_contacts_ident_nm", primary_key: "cont_contacts_ident_nm", name: "fk_app_cont_contacts"
+  add_foreign_key "app_mar_contacts", "\"app_mar_marques\"", column: "mar_marques_ident_nm", primary_key: "mar_marques_ident_nm", name: "fk_app_mar_marques"
+  add_foreign_key "app_mar_marques", "\"rfs_mar_pays\"", column: "mar_pays_ident_nm", primary_key: "mar_pays_ident_nm", name: "fk_marque_pays"
+  add_foreign_key "app_mar_marques", "\"rfs_mar_secteurs\"", column: "mar_sec_ident_nm", primary_key: "mar_sec_ident_nm", name: "fk_marque_secteur"
+  add_foreign_key "app_mar_marques", "\"rfs_mar_statuts\"", column: "mar_sta_ident_nm", primary_key: "mar_sta_ident_nm", name: "fk_marque_statut"
+  add_foreign_key "app_mar_marques", "\"rfs_mar_statuts_juridiques\"", column: "mar_sta_jur_ident_nm", primary_key: "mar_sta_jur_ident_nm", name: "fk_marque_statut_juridique"
+  add_foreign_key "app_mar_marques", "\"rfs_mar_types\"", column: "mar_typ_ident_nm", primary_key: "mar_typ_ident_nm", name: "fk_marque_type"
 end

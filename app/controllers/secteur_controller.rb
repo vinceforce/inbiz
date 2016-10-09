@@ -8,7 +8,7 @@ class SecteurController < ApplicationController
   end
 
   def create
-    @new_secteur = Secteur.create MAR_SEC_LIB_TX: params[:MAR_SEC_LIB_TX]
+    @new_secteur = Secteur.create mar_sec_lib_tx: params[:mar_sec_lib_tx]
     if @new_secteur.errors
       # render :list
       redirect_to "/refdatabo/secteurs/"
@@ -19,7 +19,7 @@ class SecteurController < ApplicationController
 
   def update
     @secteur = Secteur.find(params[:id])
-    if @secteur.update MAR_SEC_LIB_TX: params[:MAR_SEC_LIB_TX]
+    if @secteur.update mar_sec_lib_tx: params[:mar_sec_lib_tx]
       redirect_to "/refdatabo/secteurs/#{params[:id]}"
     else
       render :edit

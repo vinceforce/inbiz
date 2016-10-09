@@ -1,8 +1,8 @@
 class StatutJuridique < ActiveRecord::Base
-  self.table_name = 'RFS_MAR_STATUTS_JURIDIQUES'
-  self.primary_key = 'MAR_STA_JUR_IDENT_NM'
+  self.table_name = 'rfs_mar_statuts_juridiques'
+  self.primary_key = 'mar_sta_jur_ident_nm'
 
   has_many :Marque,
-    :foreign_key => 'FK_MARQUE_STATUT_JURIDIQUE',
-    :primary_key => 'MAR_STA_JUR_IDENT_NM'
+    :foreign_key => 'fk_marque_statut_juridique',
+    :primary_key => 'mar_sta_jur_ident_nm'
 end

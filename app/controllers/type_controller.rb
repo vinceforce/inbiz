@@ -8,7 +8,7 @@ class TypeController < ApplicationController
   end
 
   def create
-    @new_type = Type.create MAR_TYP_LIB_TX: params[:MAR_TYP_LIB_TX]
+    @new_type = Type.create mar_typ_lib_tx: params[:mar_typ_lib_tx]
     if @new_type.errors
       # render :error
       redirect_to "/refdatabo/types/"
@@ -19,7 +19,7 @@ class TypeController < ApplicationController
 
   def update
     @type = Type.find(params[:id])
-    if @type.update MAR_TYP_LIB_TX: params[:MAR_TYP_LIB_TX]
+    if @type.update mar_typ_lib_tx: params[:mar_typ_lib_tx]
       redirect_to "/refdatabo/types/#{params[:id]}"
     else
       render :edit

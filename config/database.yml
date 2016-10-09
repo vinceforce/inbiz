@@ -26,30 +26,30 @@ default: &default
 
 development:
   <<: *default
-  host: 192.168.0.20
-  username: dbr9user
-  password: r9inbiz*
-  database: r9_inbizz
-  port: 5432
-  # database: InBiz_development
+  # host: 192.168.0.20
+  # username: dbr9user
+  # password: r9inbiz*
+  # database: r9_inbizz
+  # port: 5432
+  database: InBiz_development
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
   # When left blank, postgres will use the default role. This is
   # the same name as the operating system user that initialized the database.
-  # username: InBiz
+  username: inbizsa
 
   # The password associated with the postgres role (username).
-  # password:
+  password: inbizsa
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
   # domain sockets, so uncomment these lines.
-  # host: localhost
+  host: localhost
 
   # The TCP port the server listens on. Defaults to 5432.
   # If your server runs on a different port number, change accordingly.
-  # port: 5432
+  port: 5432
 
   # Schema search path. The server defaults to $user,public
   #schema_search_path: myapp,sharedapp,public
@@ -65,11 +65,14 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
+  # host: 192.168.0.20
+  # username: dbr9user
+  # password: r9inbiz*
+  # database: r9_inbizz
   database: InBiz_test
-  host: 192.168.0.20
-  username: dbr9user
-  password: r9inbiz*
-  database: r9_inbizz
+  host: localhost
+  username: inbizsa
+  password: inbizsa
   port: 5432
 
 # As with config/secrets.yml, you never want to store sensitive information,
@@ -93,12 +96,13 @@ test:
 #
 production:
   <<: *default
-  host: 192.168.0.20
-  username: dbr9user
-  password: r9inbiz*
-  database: r9_inbizz
+  # host: 192.168.0.20
+  # username: dbr9user
+  # password: r9inbiz*
+  # database: r9_inbizz
   port: 5432
+  host: localhost
 
- # database: InBiz_production
- # username: InBiz
- # password: <%= ENV['INBIZ_DATABASE_PASSWORD'] %>
+  database: InBiz_production
+  username: inbizsa
+  password: inbizsa

@@ -1,7 +1,7 @@
 <h1>Gestion des statuts (<a href="/refdatabo/">Retour</a>)</h1>
 <h2>Créer</h2>
 <%= form_tag '/refdatabo/statuts', method: 'post' do %>
-  <input type="text" name="MAR_STA_LIB_TX" placeholder="Libellé"/>
+  <input type="text" name="mar_sta_lib_tx" placeholder="Libellé"/>
   <input type="submit" value="Ajouter" />
 <% end %>
 
@@ -9,12 +9,12 @@
 
 <% @listestatuts.each do |statut| %>
   <p>
-    <a href="/refdatabo/statuts/<%= statut.MAR_STA_IDENT_NM %>"><%= statut.MAR_STA_LIB_TX %></a>
+    <a href="/refdatabo/statuts/<%= statut.mar_sta_ident_nm %>"><%= statut.mar_sta_lib_tx %></a>
   </p>
 <% end %>
 
 <h2>Créer</h2>
 <%= form_tag '/refdatabo/statuts', method: 'post' do %>
-  <input type="text" name="MAR_STA_LIB_TX" placeholder="Libellé"/>
+  <input type="text" name="mar_sta_lib_tx" placeholder="Libellé"/>
   <input type="submit" value="Ajouter" />
 <% end %>

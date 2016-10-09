@@ -1,8 +1,8 @@
 class Pays < ActiveRecord::Base
-  self.table_name = 'RFS_MAR_PAYS'
-  self.primary_key = 'MAR_PAYS_IDENT_NM'
+  self.table_name = 'rfs_mar_pays'
+  self.primary_key = 'mar_pays_ident_nm'
 
   has_many :Marque,
-    :foreign_key => 'FK_MARQUE_PAYS',
-    :primary_key => 'MAR_PAYS_IDENT_NM'
+    :foreign_key => 'fk_marque_pays',
+    :primary_key => 'mar_pays_ident_nm'
 end

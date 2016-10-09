@@ -1,6 +1,6 @@
 class Contact < ActiveRecord::Base
-  self.table_name = 'APP_CONT_CONTACTS'
-  self.primary_key = 'CONT_CONTACTS_IDENT_NM'
+  self.table_name = 'app_cont_contacts'
+  self.primary_key = 'cont_contacts_ident_nm'
 
   belongs_to :LiensContactMarque
 end

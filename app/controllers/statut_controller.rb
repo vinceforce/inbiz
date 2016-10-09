@@ -8,7 +8,7 @@ class StatutController < ApplicationController
   end
 
   def create
-    @new_statut = Statut.create MAR_STA_LIB_TX: params[:MAR_STA_LIB_TX]
+    @new_statut = Statut.create mar_sta_lib_tx: params[:mar_sta_lib_tx]
     if @new_statut.errors
       # render :list
       redirect_to "/refdatabo/statuts/"
@@ -19,7 +19,7 @@ class StatutController < ApplicationController
 
   def update
     @statut = Statut.find(params[:id])
-    if @statut.update MAR_STA_LIB_TX: params[:MAR_STA_LIB_TX]
+    if @statut.update mar_sta_lib_tx: params[:mar_sta_lib_tx]
       redirect_to "/refdatabo/statuts/#{params[:id]}"
     else
       render :edit

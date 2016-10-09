@@ -1,7 +1,7 @@
 <h1>Gestion des pays (<a href="/refdatabo/">Retour</a>)</h1>
 <h2>Créer</h2>
 <%= form_tag '/refdatabo/pays', method: 'post' do %>
-  <input type="text" name="MAR_PAYS_LIB_TX" placeholder="Libellé"/>
+  <input type="text" name="mar_pays_lib_tx" placeholder="Libellé"/>
   <input type="submit" value="Ajouter" />
 <% end %>
 
@@ -9,12 +9,12 @@
 
 <% @listepays.each do |pays| %>
   <p>
-    <a href="/refdatabo/pays/<%= pays.MAR_PAYS_IDENT_NM %>"><%= pays.MAR_PAYS_LIB_TX %></a>
+    <a href="/refdatabo/pays/<%= pays.mar_pays_ident_nm %>"><%= pays.mar_pays_lib_tx %></a>
   </p>
 <% end %>
 
 <h2>Créer</h2>
 <%= form_tag '/refdatabo/pays', method: 'post' do %>
-  <input type="text" name="MAR_PAYS_LIB_TX" placeholder="Libellé"/>
+  <input type="text" name="mar_pays_lib_tx" placeholder="Libellé"/>
   <input type="submit" value="Ajouter" />
 <% end %>

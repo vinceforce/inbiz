@@ -1,7 +1,7 @@
 <h1>Gestion des types (<a href="/refdatabo/">Retour</a>)</h1>
 <h2>Créer</h2>
 <%= form_tag '/refdatabo/types', method: 'post' do %>
-  <input type="text" name="MAR_TYP_LIB_TX" placeholder="Libellé"/>
+  <input type="text" name="mar_typ_lib_tx" placeholder="Libellé"/>
   <input type="submit" value="Ajouter" />
 <% end %>
 
@@ -9,12 +9,12 @@
 
 <% @listetypes.each do |type| %>
   <p>
-    <a href="/refdatabo/types/<%= type.MAR_TYP_IDENT_NM %>"><%= type.MAR_TYP_LIB_TX %></a>
+    <a href="/refdatabo/types/<%= type.mar_typ_ident_nm %>"><%= type.mar_typ_lib_tx %></a>
   </p>
 <% end %>
 
 <h2>Créer</h2>
 <%= form_tag '/refdatabo/types', method: 'post' do %>
-  <input type="text" name="MAR_TYP_LIB_TX" placeholder="Libellé"/>
+  <input type="text" name="mar_typ_lib_tx" placeholder="Libellé"/>
   <input type="submit" value="Ajouter" />
 <% end %>

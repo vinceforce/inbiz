@@ -1,8 +1,8 @@
 class Statut < ActiveRecord::Base
-  self.table_name = 'RFS_MAR_STATUTS'
-  self.primary_key = 'MAR_STA_IDENT_NM'
+  self.table_name = 'rfs_mar_statuts'
+  self.primary_key = 'mar_sta_ident_nm'
 
   has_many :Marque,
-    :foreign_key => 'FK_MARQUE_STATUT',
-    :primary_key => 'MAR_STA_IDENT_NM'
+    :foreign_key => 'fk_marque_statut',
+    :primary_key => 'mar_sta_ident_nm'
 end
