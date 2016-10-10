@@ -1,0 +1,21 @@
+<header>
+  <h1>Gestion des statuts juridiques</h1>
+</header>
+<h2>Liste</h2>
+<main class="page-content-wrapper" role="main">
+  <div class="site-content">
+    <% @listestatutsjuridiques.each do |statutjuridique| %>
+      <p>
+        <a href="/refdatabo/statuts_juridiques/<%= statutjuridique.mar_sta_jur_ident_nm %>"><%= statutjuridique.mar_sta_jur_lib_tx %></a>
+      </p>
+    <% end %>
+  </div>
+</main>
+<h2>Créer</h2>
+<%= form_tag '/refdatabo/statuts_juridiques', method: 'post' do %>
+  <input type="text" name="mar_sta_jur_lib_tx" placeholder="Libellé"/>
+  <input type="submit" value="Ajouter" />
+<% end %>
+<footer>
+  <h1><a href="/refdatabo/">Retour</a></h1>
+</footer>

@@ -36,6 +36,8 @@ gem 'jbuilder', '~> 2.5'
 # Use composite_primary_keys pour gérer des clés primaires multiples
 gem 'composite_primary_keys'
 
+# auto-complétion sur le formulaire de recherche
+gem 'rails4-autocomplete'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

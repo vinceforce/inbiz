@@ -11,11 +11,12 @@
 
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag "autocomplete-rails.js" %>
   </head>
 
   <body>
     <div class="global-wrapper">
-    <%= yield %>
-  </div>
+      <%= yield %>
+    </div>
   </body>
 </html>

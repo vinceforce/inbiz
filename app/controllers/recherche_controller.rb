@@ -1,0 +1,2 @@
+class RechercheController < ApplicationController
+end
