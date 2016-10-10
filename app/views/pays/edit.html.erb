@@ -1,13 +1,20 @@
-<h1>Modification</h1>
+<header>
+  <h1>Modification</h1>
+</header>
 
-<%= form_tag "/refdatabo/pays/#{@pays.mar_pays_ident_nm}", method: "patch" do %>
-  <input type="text" name="mar_pays_lib_tx" value="<%= @pays.mar_pays_lib_tx %>" placeholder="Libellé"/>
-  <%= @pays.errors[:title].first %>
-  <input type="submit" value="Modifier" />
-<% end %>
+<main class="page-content-wrapper" role="main">
+  <div class="site-content">
+    <%= form_tag "/refdatabo/pays/#{@pays.mar_pays_ident_nm}", method: "patch" do %>
+      <input type="text" name="mar_pays_lib_tx" value="<%= @pays.mar_pays_lib_tx %>" placeholder="Libellé"/>
+      <%= @pays.errors[:title].first %>
+      <input type="submit" value="Modifier" />
+    <% end %>
 
-<%= form_tag "/refdatabo/pays/#{@pays.mar_pays_ident_nm}", method: "delete" do %>
-  <input type="submit" value="Supprimer" />
-<% end %>
-
-<p><a href="/refdatabo/pays/">Retourner à la liste</a></p>
+    <%= form_tag "/refdatabo/pays/#{@pays.mar_pays_ident_nm}", method: "delete" do %>
+      <input type="submit" value="Supprimer" />
+    <% end %>
+  </div>
+</main>
+<footer>
+  <h1><a href="/refdatabo/pays/">Retour à la liste</a></h1>
+</footer>

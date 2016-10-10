@@ -1,13 +1,18 @@
-<h1>Modification</h1>
-
-<%= form_tag "/refdatabo/statuts/#{@statut.mar_sta_ident_nm}", method: "patch" do %>
-  <input type="text" name="mar_sta_lib_tx" value="<%= @statut.mar_sta_lib_tx %>" placeholder="Libellé"/>
-  <%= @statut.errors[:title].first %>
-  <input type="submit" value="Modifier" />
-<% end %>
-
-<%= form_tag "/refdatabo/statuts/#{@statut.mar_sta_ident_nm}", method: "delete" do %>
-  <input type="submit" value="Supprimer" />
-<% end %>
-
-<p><a href="/refdatabo/statuts/">Retourner à la liste</a></p>
+<header>
+  <h1>Modification</h1>
+</header>
+<main class="page-content-wrapper" role="main">
+  <div class="site-content">
+    <%= form_tag "/refdatabo/statuts/#{@statut.mar_sta_ident_nm}", method: "patch" do %>
+      <input type="text" name="mar_sta_lib_tx" value="<%= @statut.mar_sta_lib_tx %>" placeholder="Libellé"/>
+      <%= @statut.errors[:title].first %>
+      <input type="submit" value="Modifier" />
+    <% end %>
+    <%= form_tag "/refdatabo/statuts/#{@statut.mar_sta_ident_nm}", method: "delete" do %>
+      <input type="submit" value="Supprimer" />
+    <% end %>
+  </div>
+</main>
+<footer>
+  <h1><a href="/refdatabo/statuts/">Retour à la liste</a></h1>
+</footer>
