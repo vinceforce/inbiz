@@ -4,6 +4,14 @@ Rails.application.routes.draw do
   #get '/marques/:id' => 'marque#show'
   #get '/marques/add/' => 'marque#create'
 
+  post '/recherche' => 'recherche#results'
+  get '/recherche' => 'marque#list'
+  resources :recherche do
+    collection do
+      get 'autocomplete'
+    end
+  end
+
   get '/refdatabo/' => 'refdatabo#index'
 
   get '/refdatabo/pays/' => 'pays#list'

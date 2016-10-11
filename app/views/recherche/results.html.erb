@@ -1,0 +1,20 @@
+<%= render 'header/index'%>
+<main class="page-content-wrapper" role="main">
+  <div class="site-content">
+    <h1>Liste des résultats</h1>
+    <% @marques.each do |marque| %>
+    <h2><%=marque.mar_marques_nom_tx%></h2>
+      <% @liensContact.where(mar_marques_ident_nm: marque.mar_marques_ident_nm).each do |lienContact| %>
+        <p>
+        <%=lienContact.cont_contacts_ident_nm%> - <%=@contacts.where(cont_contacts_ident_nm: lienContact.cont_contacts_ident_nm).first().cont_contacts_mail_tx%>
+        </p>
+      <% end %>
+
+    <% end %>
+  </div>
+</main>
+<footer role="contentinfo" class="page-footer-wrapper">
+    <div class="site-content footer-content">
+
+    </div>
+</footer>

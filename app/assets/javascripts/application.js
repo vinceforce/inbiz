@@ -12,5 +12,16 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui/autocomplete
 //= require turbolinks
 //= require_tree .
+var ready;
+ready = (function() {
+  $('a[href="' + this.location.pathname + '"]').parent().addClass('active');
+  $("#searchfield").autocomplete({
+    source: '/recherche/autocomplete.json'
+  });
+});
+
+$(document).ready(ready);
+$(document).on('page:load', ready);
