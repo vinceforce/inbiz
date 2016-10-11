@@ -1,15 +1,18 @@
 <%= render 'header/index'%>
 <main class="page-content-wrapper" role="main">
   <div class="site-content">
-    <h1>Liste des résultats</h1>
+    <h1>Liste des marques</h1>
     <% @marques.each do |marque| %>
-    <h2><%=marque.mar_marques_nom_tx%></h2>
+      <h2><%=marque.mar_marques_nom_tx%></h2>
       <% @liensContact.where(mar_marques_ident_nm: marque.mar_marques_ident_nm).each do |lienContact| %>
         <p>
         <%=lienContact.cont_contacts_ident_nm%> - <%=@contacts.where(cont_contacts_ident_nm: lienContact.cont_contacts_ident_nm).first().cont_contacts_mail_tx%>
         </p>
       <% end %>
-
+    <% end %>
+    <h1>Liste des contacts</h1>
+    <% @contacts.each do |contact| %>
+      <h2><%=contact.cont_contacts_prenom_tx%> <%=contact.cont_contacts_nom_tx%></h2>
     <% end %>
   </div>
 </main>

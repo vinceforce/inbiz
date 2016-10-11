@@ -19,7 +19,10 @@ var ready;
 ready = (function() {
   $('a[href="' + this.location.pathname + '"]').parent().addClass('active');
   $("#searchfield").autocomplete({
-    source: '/recherche/autocomplete.json'
+    source: '/recherche/autocomplete.json',
+    select: function( event, ui ) {
+      // $('#searchfield').value += ui.item.value
+    }
   });
 });
 
