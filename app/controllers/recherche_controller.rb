@@ -44,6 +44,8 @@ class RechercheController < ApplicationController
       }
     end
   end
+
+
   def results
     @queries = params[:query].split(",")
     @queries.each do |q|
@@ -71,5 +73,7 @@ class RechercheController < ApplicationController
     end
     @contacts = Contact.where(@where_cond)
     @liensContact = LiensContactMarque.all
+    # @nb_results = @marques.size + @contacts.size
+    @toutes_les_marques = Marque.all
   end
 end

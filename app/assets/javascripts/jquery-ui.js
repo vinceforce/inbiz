@@ -2273,11 +2273,11 @@ $.widget( "ui.autocomplete", {
 				}
 
 				if ( false !== this._trigger( "select", event, { item: item } ) ) {
+					this._value( item.value );
 					//*****// BEGIN - T2BH modification pour autocomplete avec multi-termes dans un même champ de recherche avec séparateur par virgule
-					// this._value( item.value );
-					var t2b_poslastcomma = this._value().lastIndexOf(",")
-					var t2b_oldval = (t2b_poslastcomma==-1)?"":this._value().substr(0, t2b_poslastcomma + 1)
-					this._value( t2b_oldval + item.value + ", " );
+					// var t2b_poslastcomma = this._value().lastIndexOf(",")
+					// var t2b_oldval = (t2b_poslastcomma==-1)?"":this._value().substr(0, t2b_poslastcomma + 1)
+					// this._value( t2b_oldval + item.value + ", " );
 					//*****// END - T2BH modification pour autocomplete avec multi-termes dans un même champ de recherche avec séparateur par virgule
 				}
 

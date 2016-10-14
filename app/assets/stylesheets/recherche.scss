@@ -1,3 +1,6 @@
 // Place all the styles related to the recherche controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.ui-autocomplete-loading {
+  background: white url(asset-path("vendors/ui-anim_basic_16x16.gif")) right center no-repeat;
+}

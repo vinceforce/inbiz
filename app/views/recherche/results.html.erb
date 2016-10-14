@@ -1,6 +1,41 @@
-<%= render 'header/index'%>
 <main class="page-content-wrapper" role="main">
   <div class="site-content">
+    <section class="header">
+      <div class="btnico icoback actback">
+          <a href="#"></a>
+      </div>
+      <div class="pagetitle"><span class="grey"><%= @marques.size + @contacts.size %></span> résultat(s) pour votre <br class="mob-nobr">recherche.</div>
+    </section>
+<% if @marques.size + @contacts.size == 0 %>
+  <section class="subheader">
+      <div>
+          <form action="/marques/edit/" method="post">
+              <div class="flex-grid hcenter vcenter ccenter spadding">
+                  <div class="col100">
+                      <p class="ta-center">Votre recherche n'a donné aucun résultat. Vous pouvez soit effectuer une autre recherche, soit</p>
+                  </div>
+                  <div class="mob-col100">
+                      <div class="btninnerico rouge ajouter actCreateMarque" title="Ajouter une marque">Ajouter une marque</div>
+                  </div>
+                  <div class="mob-col100">ou</div>
+                  <div class="mob-col100">
+                      <div class="styled-select nomargin" style="margin-top:9px"><select name="marque" class="actMarque">
+                        <option value="">Pour ajouter un contact sélectionnez une marque</option>
+                        <% @toutes_les_marques.each do |m| %>
+                          <option value="<%= m.mar_marques_ident_nm %>"><%= m.mar_marques_nom_tx %></option>
+                        <% end %>
+                      </select></div>
+                  </div>
+                  <div class="mob-col100">
+                      <div class="btninnerico blanc ajouter actCreateContact" title="Ajouter un contact">Ajouter un contact</div>
+                  </div>
+              </div>
+          </form>
+      </div>
+  </section>
+
+<% end %>
+
     <h1>Liste des marques</h1>
     <% @marques.each do |marque| %>
       <h2><%=marque.mar_marques_nom_tx%></h2>
@@ -16,8 +51,3 @@
     <% end %>
   </div>
 </main>
-<footer role="contentinfo" class="page-footer-wrapper">
-    <div class="site-content footer-content">
-
-    </div>
-</footer>

@@ -1,16 +1,21 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  get '/marques/' => 'marque#list'
-  #get '/marques/:id' => 'marque#show'
-  #get '/marques/add/' => 'marque#create'
-
+  # resources :recherche do
+  #   collection do
+  #     get 'autocomplete'
+  #   end
+  # end
+  get '/recherche/autocomplete' => 'recherche#autocomplete'
   post '/recherche' => 'recherche#results'
-  get '/recherche' => 'marque#list'
-  resources :recherche do
-    collection do
-      get 'autocomplete'
-    end
-  end
+
+  get '/' => 'marque#list'
+
+  post '/marques/create/' => 'marque#create'
+  get '/marques/create/' => 'marque#create'
+  get 'marques/mask/' => 'marque#new'
+  get '/marques/mask/:id' => 'marque#edit'
+  post '/marques/mask/' => 'marque#addcontact'
+  get '/marques/:id' => 'marque#show'
 
   get '/refdatabo/' => 'refdatabo#index'
 

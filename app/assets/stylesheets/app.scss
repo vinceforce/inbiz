@@ -12,7 +12,7 @@
   font-family: "dripicons-v2";
   src: font-url("dripicons-v2.eot");
   src: font-url("dripicons-v2.eot?#iefix") format("embedded-opentype"),
-      font-url(".dripicons-v2.woff") format("woff"),
+      font-url("dripicons-v2.woff") format("woff"),
       font-url("dripicons-v2.ttf") format("truetype"),
       font-url("dripicons-v2.svg#dripicons-v2") format("svg");
   font-weight: normal;
@@ -786,7 +786,7 @@ input[type="radio"]:checked + input + label:after {
   z-index: 1;
   width: 120%;
   border: none;
-  background-image: url(asset-path("/ico_select.png"));
+  background-image: url(asset-path("ico_select.png"));
   background-position: 82% center;
   background-repeat: no-repeat;
 }
@@ -2271,6 +2271,9 @@ main section.marquedetail .marquedatas .form-section {
 main section.marquedetail .marquedatas .preico {
   display: block;
 }
+main section.marquedetail .marquedatas .preico .styled-select{
+  margin: 12px 0 0 0;
+}
 /* line 716, ../../src/sass/_pages.scss */
 main section.marquedetail .marquedatas input[type=text] {
   padding: 7px 10px;
@@ -2741,7 +2744,7 @@ main section.marquecontact .btnpill {
   width: 32px;
   height: 32px;
   content: "";
-  background-image: url(asset-path("/ico_accordeon_close.png"));
+  background-image: url(asset-path("ico_accordeon_close.png"));
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
@@ -2751,7 +2754,7 @@ main section.marquecontact .btnpill {
 }
 /* line 1059, ../../src/sass/_pages.scss */
 .accordeon.open > div:nth-child(1):after {
-  background-image: url(asset-path("/ico_accordeon_open.png"));
+  background-image: url(asset-path("ico_accordeon_open.png"));
 }
 /* line 1062, ../../src/sass/_pages.scss */
 .accordeon > div:nth-child(2) {
@@ -2863,27 +2866,27 @@ img {
 }
 /* line 1156, ../../src/sass/_pages.scss */
 .btninnerico.gris.annuler {
-  background-image: url(asset-path("/ico_close_normal.png"));
+  background-image: url(asset-path("ico_close_normal.png"));
 }
 /* line 1158, ../../src/sass/_pages.scss */
 .btninnerico.gris.annuler:hover {
-  background-image: url(asset-path("/ico_close_hover.png"));
+  background-image: url(asset-path("ico_close_hover.png"));
 }
 /* line 1162, ../../src/sass/_pages.scss */
 .btninnerico.gris.valider {
-  background-image: url(asset-path("/ico_check_normal.png"));
+  background-image: url(asset-path("ico_check_normal.png"));
 }
 /* line 1164, ../../src/sass/_pages.scss */
 .btninnerico.gris.valider:hover {
-  background-image: url(asset-path("/ico_check_hover.png"));
+  background-image: url(asset-path("ico_check_hover.png"));
 }
 /* line 1168, ../../src/sass/_pages.scss */
 .btninnerico.gris.ajouter {
-  background-image: url(asset-path("/ico_btnajouter_normal.png"));
+  background-image: url(asset-path("ico_btnajouter_normal.png"));
 }
 /* line 1170, ../../src/sass/_pages.scss */
 .btninnerico.gris.ajouter:hover {
-  background-image: url(asset-path("/ico_btnajouter_hover.png"));
+  background-image: url(asset-path("ico_btnajouter_hover.png"));
 }
 /* line 1175, ../../src/sass/_pages.scss */
 .btninnerico.blanc {
@@ -2896,27 +2899,27 @@ img {
 }
 /* line 1181, ../../src/sass/_pages.scss */
 .btninnerico.blanc.annuler {
-  background-image: url(asset-path("/ico_close_gris.png"));
+  background-image: url(asset-path("ico_close_gris.png"));
 }
 /* line 1183, ../../src/sass/_pages.scss */
 .btninnerico.blanc.annuler:hover {
-  background-image: url(asset-path("/ico_close_hover.png"));
+  background-image: url(asset-path("ico_close_hover.png"));
 }
 /* line 1187, ../../src/sass/_pages.scss */
 .btninnerico.blanc.valider {
-  background-image: url(asset-path("/ico_check_gris.png"));
+  background-image: url(asset-path("ico_check_gris.png"));
 }
 /* line 1189, ../../src/sass/_pages.scss */
 .btninnerico.blanc.valider:hover {
-  background-image: url(asset-path("/ico_check_hover.png"));
+  background-image: url(asset-path("ico_check_hover.png"));
 }
 /* line 1193, ../../src/sass/_pages.scss */
 .btninnerico.blanc.ajouter {
-  background-image: url(asset-path("/ico_btnajouter_gris.png"));
+  background-image: url(asset-path("ico_btnajouter_gris.png"));
 }
 /* line 1195, ../../src/sass/_pages.scss */
 .btninnerico.blanc.ajouter:hover {
-  background-image: url(asset-path("/ico_btnajouter_hover.png"));
+  background-image: url(asset-path("ico_btnajouter_hover.png"));
 }
 /* line 1200, ../../src/sass/_pages.scss */
 .btninnerico.rouge {
@@ -3098,7 +3101,7 @@ img {
 
 /* line 1343, ../../src/sass/_pages.scss */
 .icochimie {
-  background-image: url(asset-path("images/ico_secteur_normal.png"));
+  background-image: url(asset-path("ico_secteur_normal.png"));
 }
 
 /* line 1347, ../../src/sass/_pages.scss */
