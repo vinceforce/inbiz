@@ -1,0 +1,960 @@
+<main class="page-content-wrapper" role="main">
+    <div class="site-content">
+        <section class="header">
+            <div class="btnico icoback actback">
+                <a href="#"></a>
+            </div>
+            <div class="pagetitle"><%= @marque ? 'DÉTAILS DE ' + @marque.mar_marques_nom_tx : 'NOUVELLE MARQUE' %></div>
+        </section>
+        <!--
+section marquedetail,
+ajouter class "creation" pour obtenir le masque de création, aucun contactitem à la création de marque
+ajouter class "proprietaire" pour obtenir le masque d'édition -->
+        <section class="marquedetail<%= @sectionclassadd %>">
+            <!-- <form action="/marques/create/"> -->
+              <%= form_tag(@marque ? '/marques/update.json' : '/marques/create.json', method: @marque ? 'patch' : 'post', multipart: true) do %>
+              <%= @marque ? hidden_field_tag('mar_marques_ident_nm', @marque.mar_marques_ident_nm) : '' %>
+                <div class="marqueitemfixedholder">
+                    <div class="marqueitem">
+                        <div class="marquelogo">
+                            <a href="marque.html"><img src="<%=asset_path('logomarque.png')%>"></a>
+                        </div>
+                        <div class="marqueinfo">
+                            <div class="marquenom"><a href="/marques/show/"><%= @marque ? @marque.mar_marques_nom_tx : '' %><sup><%= @marque && @marque.mar_sta_jur_ident_nm ? StatutJuridique.find(@marque.mar_sta_jur_ident_nm).mar_sta_jur_lib_tx : '' %></sup></a></div>
+                            <div class="marquestatut actif"></div>
+                        </div>
+                        <div class="marqueform">
+                            <label class="btnuploadimg" for="imgfilefield">
+                            <img id="imgfilepreview" src="" data-reset="">
+                            <div class="uploadimg"><div class="btnico icoimg"></div></div>
+                        </label>
+                          <!-- <input type="file" id="imgfilefield" name="mar_marques_logo_tx"> -->
+                          <%= file_field_tag 'mar_marques_logo_tx' %>
+                            <!-- <input type="text" data-reset="" value="<%= @marque ? @marque.mar_marques_nom_tx : '' %>" name="mar_marques_nom_tx" placeholder="Nom de la marque (obligatoire)" disabled> -->
+                            <%= text_field_tag 'mar_marques_nom_tx', @marque ? @marque.mar_marques_nom_tx : '', disabled: true, placeholder: 'Nom de la marque (obligatoire)' %>
+                            <div>
+                              <!-- <div class="styled-select"><select name="mar_sta_jur_ident_nm" data-reset="" disabled>
+                                <option value="">-- Statut juridique --</option>
+                                <% @statutsjuridiques.each do |sj| %>
+                                <option value="<%= sj.mar_sta_jur_ident_nm %>"<%= @marque && @marque.mar_sta_jur_ident_nm == sj.mar_sta_jur_ident_nm ? ' selected' : '' %>><%= sj.mar_sta_jur_lib_tx %></option>
+                                <% end %>
+                              </select></div> -->
+                              <div class="styled-select"><%= select_tag "mar_sta_jur_ident_nm", options_from_collection_for_select(@statutsjuridiques, 'mar_sta_jur_ident_nm', 'mar_sta_jur_lib_tx', (@marque && @marque.mar_sta_jur_ident_nm) ? @marque.mar_sta_jur_ident_nm : nil), prompt: '-- Statut juridique --', disabled: true %></div>
+                            </div>
+                            <div></div>
+                            <div>
+                              <!-- <div class="styled-select"><select name="mar_sta_ident_nm" data-reset="" disabled>
+                                <option value="">-- Etat --</option>
+                                <% @statuts.each do |s| %>
+                                  <option value="<%= s.mar_sta_ident_nm %>"<%= @marque && @marque.mar_sta_ident_nm == s.mar_sta_ident_nm ? ' selected' : '' %>><%= s.mar_sta_lib_tx %></option>
+                                <% end %>
+                              </select></div> -->
+                              <div class="styled-select"><%= select_tag "mar_sta_ident_nm", options_from_collection_for_select(@statuts, 'mar_sta_ident_nm', 'mar_sta_lib_tx', (@marque && @marque.mar_sta_ident_nm) ? @marque.mar_sta_ident_nm : nil), prompt: '-- Etat --', disabled: true %></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="marquedatas">
+                    <div class="accordeon open">
+                        <div>Informations marque</div>
+                        <div>
+                            <div class="flex-grid">
+                                <div class="col100"><span class="form-section">Type marque</span></div>
+                                <div class="col50 mob-col100">
+                                    <div class="profilinfo preico icoetiquette">
+                                      <!-- <div class="styled-select"><select name="mar_typ_ident_nm" data-reset="" disabled>
+                                        <option value="">-- Type --</option>
+                                        <% @types.each do |t| %>
+                                          <option value="<%= t.mar_typ_ident_nm %>"<%= @marque && @marque.mar_typ_ident_nm == t.mar_typ_ident_nm ? ' selected' : '' %>><%= t.mar_typ_lib_tx %></option>
+                                        <% end %>
+                                      </select></div> -->
+                                      <div class="styled-select"><%= select_tag "mar_typ_ident_nm", options_from_collection_for_select(@types, 'mar_typ_ident_nm', 'mar_typ_lib_tx', (@marque && @marque.mar_typ_ident_nm) ? @marque.mar_typ_ident_nm : nil), prompt: '-- Type --', disabled: true %></div>
+                                    </div>
+                                </div>
+                                <div class="col50 mob-col100">
+                                    <div class="profilinfo preico icochimie">
+                                      <!-- <div class="styled-select"><select name="mar_sec_ident_nm" data-reset="" disabled>
+                                        <option value="">-- Secteur --</option>
+                                        <% @secteurs.each do |se| %>
+                                          <option value="<%= se.mar_sec_ident_nm %>"<%= (@marque && @marque.mar_sec_ident_nm == se.mar_sec_ident_nm) ? ' selected' : '' %>><%= se.mar_sec_lib_tx %></option>
+                                        <% end %>
+                                      </select></div> -->
+                                      <div class="styled-select"><%= select_tag "mar_sec_ident_nm", options_from_collection_for_select(@secteurs, 'mar_sec_ident_nm', 'mar_sec_lib_tx', (@marque && @marque.mar_sec_ident_nm) ? @marque.mar_sec_ident_nm : nil), prompt: '-- Secteur --', disabled: true %></div>
+                                    </div>
+                                </div>
+                                <div class="col50 mob-col100">
+                                    <div class="profilinfo preico icoccard">
+                                        <!-- <input type="text" data-reset="" value="Lorem ipsum dolor sit amet" name="" placeholder="Chiffre d’affaire"> -->
+                                        <%= text_field_tag 'mar_marques_ca_tx', @marque ? @marque.mar_marques_ca_tx : nil, placeholder: 'Chiffre d’affaire' %>
+                                    </div>
+                                </div>
+                                <div class="col50 mob-col100">
+                                    <div class="profilinfo preico icogroupe">
+                                        <!-- <input type="text" data-reset="" value="" name="" placeholder="Nombre de salarié"> -->
+                                        <%= text_field_tag 'mar_marques_nb_salaries_nm', @marque ? @marque.mar_marques_nb_salaries_nm : nil, placeholder: 'Nombre de salariés' %>
+                                    </div>
+                                </div>
+                                <div class="col100"><span class="form-section">Adresse du siège</span></div>
+                                <div class="col100">
+                                    <!-- <input type="text" data-reset="" value="" name="" placeholder="Adresse"> -->
+                                    <%= text_field_tag 'mar_marques_adresse1_tx', @marque ? @marque.mar_marques_adresse1_tx : nil, placeholder: 'Adresse' %>
+                                </div>
+                                <div class="col100">
+                                    <!-- <input type="text" data-reset="" value="" name="" placeholder="Complément d'adresse"> -->
+                                    <%= text_field_tag 'mar_marques_adresse2_tx', @marque ? @marque.mar_marques_adresse2_tx : nil, placeholder: 'Complément d\'adresse' %>
+                                </div>
+                                <div class="col25 mob-col100">
+                                    <!-- <input type="text" data-reset="" value="" name="" placeholder="Code postal"> -->
+                                    <%= text_field_tag 'mar_marques_cp_tx', @marque ? @marque.mar_marques_cp_tx : nil, placeholder: 'Code postal' %>
+                                </div>
+                                <div class="col25 mob-col100">
+                                    <!-- <input type="text" data-reset="" value="" name="" placeholder="Ville"> -->
+                                    <%= text_field_tag 'mar_marques_ville_tx', @marque ? @marque.mar_marques_ville_tx : nil, placeholder: 'Ville' %>
+                                </div>Code postal
+                                <div class="col25 mob-col100">
+                                  <!-- <div class="styled-select"><select name="mar_pays_ident_nm" data-reset="" disabled>
+                                    <option value="">-- Pays --</option>
+                                    <% @pays.each do |p| %>
+                                      <option value="<%= p.mar_pays_ident_nm %>"<%= (@marque && @marque.mar_pays_ident_nm == p.mar_pays_ident_nm) ? ' selected' : '' %>><%= p.mar_pays_lib_tx %></option>
+                                    <% end %>
+                                  </select></div> -->
+                                  <div class="styled-select"><%= select_tag "mar_pays_ident_nm", options_from_collection_for_select(@pays, 'mar_pays_ident_nm', 'mar_pays_lib_tx', (@marque && @marque.mar_pays_ident_nm) ? @marque.mar_pays_ident_nm : nil), prompt: '-- Pays --', disabled: true %></div>
+                                </div>
+                                <div class="col100"><span class="form-section">Web</span></div>
+                                <div class="col100">
+                                    <div class="profilinfo preico icoweb">
+                                        <!-- <input type="text" data-reset="" value="" name="" placeholder="Adresse site"> -->
+                                        <%= text_field_tag 'mar_marques_web_tx', @marque ? @marque.mar_marques_web_tx : nil, placeholder: 'Adresse site' %>
+                                    </div>
+                                </div>
+                                <div class="col100">
+                                    <div class="profilinfo preico icotwitter">
+                                        <!-- <input type="text" data-reset="" value="" name="" placeholder="Adresse Twitter"> -->
+                                        <%= text_field_tag 'mar_marques_twitter_tx', @marque ? @marque.mar_marques_twitter_tx : nil, placeholder: 'Adresse Twitter' %>
+                                    </div>
+                                </div>
+                                <div class="col100">
+                                    <div class="profilinfo preico icofacebook">
+                                        <!-- <input type="text" data-reset="" value="" name="" placeholder="Adresse Facebook"> -->
+                                        <%= text_field_tag 'mar_marques_facebook_tx', @marque ? @marque.mar_marques_facebook_tx : nil, placeholder: 'Adresse Facebook' %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% end %>
+            <!-- </form> -->
+            <div class="submitmsg"></div>
+        </section>
+        <section class="marquecontact marquecontactacheteur">
+            <div>
+                <div class="accordeon">
+                    <div>Contacts acheteurs.
+                    </div>
+                    <div>
+                        <!-- début contactitem modele pour ajout -->
+                        <div class="contactmodele">
+                            <form action="#">
+                            <input type="hidden" value="" data-name="idmarque">
+                                <div class="sectionflex">
+                                    <div class="detail">
+
+                                        <div class="flex-grid">
+                                            <div class="col33 mob-col100">
+                                                <div class="styled-select"><select data-name="civilite" data-reset="">
+                    <option value="">Civilité</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    </select></div>
+                                            </div>
+                                            <div class="col33 mob-col100">
+                                                <div class="noico">
+                                                    <input type="text" data-reset="" value="" data-name="nom" placeholder="Nom">
+                                                </div>
+                                            </div>
+                                            <div class="col33 mob-col100">
+                                                <div class="noico">
+                                                    <input type="text" data-reset="" value="" data-name="prenom" placeholder="Prénom">
+                                                </div>
+                                            </div>
+                                            <div class="col100">
+                                                <div class="preico icoemail">
+                                                    <input type="text" data-reset="" value="" name="" placeholder="E-mail">
+                                                </div>
+                                            </div>
+                                            <div class="col33 mob-col100">
+                                                <div class="preico icoblank">
+                                                    <input type="text" data-reset="" value="" name="" placeholder="Tel fixe">
+                                                </div>
+                                            </div>
+                                            <div class="col33 mob-col100">
+                                                <div class="preico icotel">
+                                                    <input type="text" data-reset="" value="" name="" placeholder="Tel mobile">
+                                                </div>
+                                            </div>
+                                            <div class="col33 mob-col100">
+                                                <div class="preico icofax">
+                                                    <input type="text" data-reset="" value="" name="" placeholder="Fax">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="tools">
+                                        <div class="btnico icoaddbl actaddcontact" title="Ajouter le contact"></div>
+                                        <div class="btnico icovalidbl actvalidcontact" title="Valider les modifications"></div>
+                                        <div class="btnico icocancelbl actcancelcontact" title="Annuler les modifications"></div>
+                                        <div class="btnico icodelbl actdelcontact" title="Supprimer le contact"></div>
+                                        <div class="btnico icolinkbl" title="Voir la marque">
+                                            <a href="marque.html"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="submitmsg"></div>
+                        </div>
+                        <!-- fin contactitem modele pour ajout -->
+                        <!-- début contactitem proprietaire -->
+                        <div class="contactitem proprietaire">
+                            <form action="#">
+                            <input type="hidden" value="" data-name="idmarque">
+                                <div class="sectionflex">
+                                    <div class="detail">
+
+                                        <div class="flex-grid">
+                                            <div class="col33 mob-col100">
+                                                <div class="styled-select"><select data-name="civilite" data-reset="">
+                    <option value="">Civilité</option>
+                    <option value="1">1</option>
+                    <option value="2" selected>2</option>
+                    <option value="3">3</option>
+                    </select></div>
+                                            </div>
+                                            <div class="col33 mob-col100">
+                                                <div class="noico">
+                                                    <input type="text" data-reset="" value="Lorem ipsum dolor sit amet" data-name="nom" placeholder="Nom">
+                                                </div>
+                                            </div>
+                                            <div class="col33 mob-col100">
+                                                <div class="noico">
+                                                    <input type="text" data-reset="" value="Lorem ipsum dolor sit amet" data-name="prenom" placeholder="Prénom">
+                                                </div>
+                                            </div>
+                                            <div class="col100">
+                                                <div class="preico icoemail">
+                                                    <input type="text" data-reset="" value="" name="" placeholder="E-mail">
+                                                </div>
+                                            </div>
+                                            <div class="col33 mob-col100">
+                                                <div class="preico icoblank">
+                                                    <input type="text" data-reset="" value="" name="" placeholder="Tel fixe">
+                                                </div>
+                                            </div>
+                                            <div class="col33 mob-col100">
+                                                <div class="preico icotel">
+                                                    <input type="text" data-reset="" value="" name="" placeholder="Tel mobile">
+                                                </div>
+                                            </div>
+                                            <div class="col33 mob-col100">
+                                                <div class="preico icofax">
+                                                    <input type="text" data-reset="" value="" name="" placeholder="Fax">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="tools">
+                                        <div class="btnico icoaddbl actaddcontact" title="Ajouter le contact"></div>
+                                        <div class="btnico icovalidbl actvalidcontact" title="Valider les modifications"></div>
+                                        <div class="btnico icocancelbl actcancelcontact" title="Annuler les modifications"></div>
+                                        <div class="btnico icodelbl actdelcontact" title="Supprimer le contact"></div>
+                                        <div class="btnico icolinkbl" title="Voir la marque">
+                                            <a href="marque.html"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="submitmsg"></div>
+                        </div>
+                        <!-- fin contactitem proprietaire -->
+                        <!-- début contactitem non proprietaire -->
+                        <div class="contactitem">
+                            <form action="#">
+                            <input type="hidden" value="" data-name="idmarque">
+                                <div class="sectionflex">
+                                    <div class="detail">
+
+                                        <div class="flex-grid">
+                                            <div class="col33 mob-col100">
+                                                <div class="styled-select"><select data-name="civilite" data-reset="">
+                    <option value="">Civilité</option>
+                    <option value="1" selected>1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    </select></div>
+                                            </div>
+                                            <div class="col33 mob-col100">
+                                                <div class="noico">
+                                                    <input type="text" data-reset="" value="Lorem ipsum dolor sit amet" data-name="nom" placeholder="Nom">
+                                                </div>
+                                            </div>
+                                            <div class="col33 mob-col100">
+                                                <div class="noico">
+                                                    <input type="text" data-reset="" value="Lorem ipsum dolor sit amet" data-name="prenom" placeholder="Prénom">
+                                                </div>
+                                            </div>
+                                            <div class="col100">
+                                                <div class="preico icoemail">
+                                                    <input type="text" data-reset="" value="" name="" placeholder="E-mail">
+                                                </div>
+                                            </div>
+                                            <div class="col33 mob-col100">
+                                                <div class="preico icoblank">
+                                                    <input type="text" data-reset="" value="" name="" placeholder="Tel fixe">
+                                                </div>
+                                            </div>
+                                            <div class="col33 mob-col100">
+                                                <div class="preico icotel">
+                                                    <input type="text" data-reset="" value="" name="" placeholder="Tel mobile">
+                                                </div>
+                                            </div>
+                                            <div class="col33 mob-col100">
+                                                <div class="preico icofax">
+                                                    <input type="text" data-reset="" value="" name="" placeholder="Fax">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="tools">
+                                        <div class="btnico icoaddbl actaddcontact" title="Ajouter le contact"></div>
+                                        <div class="btnico icovalidbl actvalidcontact" title="Valider les modifications"></div>
+                                        <div class="btnico icocancelbl actcancelcontact" title="Annuler les modifications"></div>
+                                        <div class="btnico icodelbl actdelcontact" title="Supprimer le contact"></div>
+                                        <div class="btnico icolinkbl" title="Voir la marque">
+                                            <a href="marque.html"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="submitmsg"></div>
+                        </div>
+                        <!-- fin contactitem non proprietaire -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="marquecontact marquecontactmarque">
+            <div>
+                <div class="accordeon">
+                    <div>Contacts marque.
+                    </div>
+                    <div>
+                        <!-- début contactitem modele pour ajout -->
+                        <div class="contactmodele">
+                            <form action="#">
+                            <input type="hidden" value="" data-name="idmarque">
+                                <div class="sectionflex">
+                                    <div class="detail">
+
+                                        <div class="flex-grid">
+                                            <div class="col25 mob-col100">
+                                                <div class="styled-select"><select data-name="civilite" data-reset="">
+                    <option value="">Civilité</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    </select></div>
+                                            </div>
+                                            <div class="col25 mob-col100">
+                                                <div class="noico">
+                                                    <input type="text" data-reset="" value="" data-name="nom" placeholder="Nom">
+                                                </div>
+                                            </div>
+                                            <div class="col25 mob-col100">
+                                                <div class="noico">
+                                                    <input type="text" data-reset="" value="" data-name="prenom" placeholder="Prénom">
+                                                </div>
+                                            </div>
+                                            <div class="col25 mob-col100">
+                                                <div class="styled-select"><select name="statut" data-reset="">
+                    <option value="">Statut</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    </select></div>
+                                            </div>
+                                            <div class="col33 mob-col100">
+                                                <div class="noico">
+                                                    <input type="text" data-reset="" value="" name="fonction" placeholder="Fonction">
+                                                </div>
+                                            </div>
+                                            <div class="col33 mob-col100">
+                                                <div class="noico">
+                                                    <input type="text" data-reset="" value="" name="direction" placeholder="Direction/Service">
+                                                </div>
+                                            </div>
+                                            <div class="col33 mob-col100">
+                                                <div class="styled-select"><select name="pouvoir" data-reset="">
+                    <option value="">Son pouvoir de décision</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    </select></div>
+                                            </div>
+                                            <div class="col50 mob-col100">
+                                                <div class="preico icoemail">
+                                                    <input type="text" data-reset="" value="" name="" placeholder="E-mail">
+                                                </div>
+                                            </div>
+                                            <div class="col50 mob-col100">
+                                                <div class="preico icolinkedin">
+                                                    <input type="text" data-reset="" value="" name="" placeholder="LinkedIn">
+                                                </div>
+                                            </div>
+                                            <div class="col33 mob-col100">
+                                                <div class="preico icoblank">
+                                                    <input type="text" data-reset="" value="" name="" placeholder="Tel fixe">
+                                                </div>
+                                            </div>
+                                            <div class="col33 mob-col100">
+                                                <div class="preico icotel">
+                                                    <input type="text" data-reset="" value="" name="" placeholder="Tel mobile">
+                                                </div>
+                                            </div>
+                                            <div class="col33 mob-col100">
+                                                <div class="preico icofax">
+                                                    <input type="text" data-reset="" value="" name="" placeholder="Fax">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="tools">
+                                        <div class="btnico icoaddbl actaddcontact" title="Ajouter le contact"></div>
+                                        <div class="btnico icovalidbl actvalidcontact" title="Valider les modifications"></div>
+                                        <div class="btnico icocancelbl actcancelcontact" title="Annuler les modifications"></div>
+                                        <div class="btnico icodelbl actdelcontact" title="Supprimer le contact"></div>
+                                        <div class="btnico icolinkbl" title="Voir la marque">
+                                            <a href="marque.html"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="submitmsg"></div>
+                        </div>
+                        <!-- fin contactitem modele pour ajout -->
+                        <!-- début contactitem proprietaire -->
+                        <div class="contactitem proprietaire">
+                            <form action="#">
+                            <input type="hidden" value="" data-name="idmarque">
+                                <div class="sectionflex">
+                                    <div class="detail">
+
+                                        <div class="flex-grid">
+                                            <div class="col25 mob-col100">
+                                                <div class="styled-select"><select data-name="civilite" data-reset="">
+                    <option value="">Civilité</option>
+                    <option value="1" selected>1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    </select></div>
+                                            </div>
+                                            <div class="col25 mob-col100">
+                                                <div class="noico">
+                                                    <input type="text" data-reset="" value="Lorem ipsum" data-name="nom" placeholder="Nom">
+                                                </div>
+                                            </div>
+                                            <div class="col25 mob-col100">
+                                                <div class="noico">
+                                                    <input type="text" data-reset="" value="Lorem ipsum" data-name="prenom" placeholder="Prénom">
+                                                </div>
+                                            </div>
+                                            <div class="col25 mob-col100">
+                                                <div class="styled-select"><select name="statut" data-reset="">
+                    <option value="">Statut</option>
+                    <option value="1" selected>1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    </select></div>
+                                            </div>
+                                            <div class="col33 mob-col100">
+                                                <div class="noico">
+                                                    <input type="text" data-reset="" value="Lorem ipsum" name="fonction" placeholder="Fonction">
+                                                </div>
+                                            </div>
+                                            <div class="col33 mob-col100">
+                                                <div class="noico">
+                                                    <input type="text" data-reset="" value="" name="direction" placeholder="Direction/Service">
+                                                </div>
+                                            </div>
+                                            <div class="col33 mob-col100">
+                                                <div class="styled-select"><select name="pouvoir" data-reset="">
+                    <option value="">Son pouvoir de décision</option>
+                    <option value="1">1</option>
+                    <option value="2" selected>2</option>
+                    <option value="3">3</option>
+                    </select></div>
+                                            </div>
+                                            <div class="col50 mob-col100">
+                                                <div class="preico icoemail">
+                                                    <input type="text" data-reset="" value="Lorem ipsum" name="" placeholder="E-mail">
+                                                </div>
+                                            </div>
+                                            <div class="col50 mob-col100">
+                                                <div class="preico icolinkedin">
+                                                    <input type="text" data-reset="" value="Lorem ipsum" name="" placeholder="LinkedIn">
+                                                </div>
+                                            </div>
+                                            <div class="col33 mob-col100">
+                                                <div class="preico icoblank">
+                                                    <input type="text" data-reset="" value="" name="" placeholder="Tel fixe">
+                                                </div>
+                                            </div>
+                                            <div class="col33 mob-col100">
+                                                <div class="preico icotel">
+                                                    <input type="text" data-reset="" value="Lorem ipsum" name="" placeholder="Tel mobile">
+                                                </div>
+                                            </div>
+                                            <div class="col33 mob-col100">
+                                                <div class="preico icofax">
+                                                    <input type="text" data-reset="" value="" name="" placeholder="Fax">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="tools">
+                                        <div class="btnico icoaddbl actaddcontact" title="Ajouter le contact"></div>
+                                        <div class="btnico icovalidbl actvalidcontact" title="Valider les modifications"></div>
+                                        <div class="btnico icocancelbl actcancelcontact" title="Annuler les modifications"></div>
+                                        <div class="btnico icodelbl actdelcontact" title="Supprimer le contact"></div>
+                                        <div class="btnico icolinkbl" title="Voir la marque">
+                                            <a href="marque.html"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="submitmsg"></div>
+                        </div>
+                        <!-- fin contactitem proprietaire -->
+                        <!-- début contactitem non proprietaire -->
+                        <div class="contactitem">
+                            <form action="#">
+                            <input type="hidden" value="" data-name="idmarque">
+                                <div class="sectionflex">
+                                    <div class="detail">
+
+                                        <div class="flex-grid">
+                                            <div class="col25 mob-col100">
+                                                <div class="styled-select"><select data-name="civilite" data-reset="">
+                    <option value="">Civilité</option>
+                    <option value="1">1</option>
+                    <option value="2" selected>2</option>
+                    <option value="3">3</option>
+                    </select></div>
+                                            </div>
+                                            <div class="col25 mob-col100">
+                                                <div class="noico">
+                                                    <input type="text" data-reset="" value="Lorem ipsum" data-name="nom" placeholder="Nom">
+                                                </div>
+                                            </div>
+                                            <div class="col25 mob-col100">
+                                                <div class="noico">
+                                                    <input type="text" data-reset="" value="Lorem ipsum" data-name="prenom" placeholder="Prénom">
+                                                </div>
+                                            </div>
+                                            <div class="col25 mob-col100">
+                                                <div class="styled-select"><select name="statut" data-reset="">
+                    <option value="">Statut</option>
+                    <option value="1" selected>1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    </select></div>
+                                            </div>
+                                            <div class="col33 mob-col100">
+                                                <div class="noico">
+                                                    <input type="text" data-reset="" value="Lorem ipsum" name="fonction" placeholder="Fonction">
+                                                </div>
+                                            </div>
+                                            <div class="col33 mob-col100">
+                                                <div class="noico">
+                                                    <input type="text" data-reset="" value="" name="direction" placeholder="Direction/Service">
+                                                </div>
+                                            </div>
+                                            <div class="col33 mob-col100">
+                                                <div class="styled-select"><select name="pouvoir" data-reset="">
+                    <option value="">Son pouvoir de décision</option>
+                    <option value="1">1</option>
+                    <option value="2" selected>2</option>
+                    <option value="3">3</option>
+                    </select></div>
+                                            </div>
+                                            <div class="col50 mob-col100">
+                                                <div class="preico icoemail">
+                                                    <input type="text" data-reset="" value="Lorem ipsum" name="" placeholder="E-mail">
+                                                </div>
+                                            </div>
+                                            <div class="col50 mob-col100">
+                                                <div class="preico icolinkedin">
+                                                    <input type="text" data-reset="" value="Lorem ipsum" name="" placeholder="LinkedIn">
+                                                </div>
+                                            </div>
+                                            <div class="col33 mob-col100">
+                                                <div class="preico icoblank">
+                                                    <input type="text" data-reset="" value="" name="" placeholder="Tel fixe">
+                                                </div>
+                                            </div>
+                                            <div class="col33 mob-col100">
+                                                <div class="preico icotel">
+                                                    <input type="text" data-reset="" value="Lorem ipsum" name="" placeholder="Tel mobile">
+                                                </div>
+                                            </div>
+                                            <div class="col33 mob-col100">
+                                                <div class="preico icofax">
+                                                    <input type="text" data-reset="" value="" name="" placeholder="Fax">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="tools">
+                                        <div class="btnico icoaddbl actaddcontact" title="Ajouter le contact"></div>
+                                        <div class="btnico icovalidbl actvalidcontact" title="Valider les modifications"></div>
+                                        <div class="btnico icocancelbl actcancelcontact" title="Annuler les modifications"></div>
+                                        <div class="btnico icodelbl actdelcontact" title="Supprimer le contact"></div>
+                                        <div class="btnico icolinkbl" title="Voir la marque">
+                                            <a href="marque.html"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="submitmsg"></div>
+                        </div>
+                        <!-- fin contactitem non proprietaire -->
+                    </div>
+                </div>
+            </div>
+            <div class="submitmsg"></div>
+        </section>
+        <section class="marquecontact marquecontactallie">
+            <div>
+                <div class="accordeon">
+                    <div>Alliés R9.
+                    </div>
+                    <div>
+                        <!-- début contactitem modele pour ajout -->
+                        <div class="contactmodele">
+                            <form action="#">
+                            <input type="hidden" value="" data-name="idmarque">
+                                <div class="sectionflex">
+                                    <div class="detail">
+                                        <div class="flex-grid">
+                                            <div class="col100">
+                                                <div class="flex-grid nowrap vcenter">
+                                                    <div class="colcondensed mob-col100">
+                                                        <div class="avatar"><img class="photo" src="<%=asset_path('avatar.jpg')%>"></div>
+                                                    </div>
+                                                    <div class="colexpanded mob-col100">
+                                                        <div class="flex-grid">
+                                                            <div class="col100 mob-colcenter">
+                                                                <div class="profilprenom">Luc</div>
+                                                                <div class="profilnom">Varez</div>
+                                                                <div class="profilagence">T2BH</div>
+                                                            </div>
+                                                            <div class="col100">
+                                                                <div class="noico">
+                                                                    <input type="text" data-reset="" value="" name="nom" placeholder="Ancienneté de la relation commerciale">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col100 infocontact infoconnaissance">
+                                                <div class="flex-grid  vcenter">
+                                                    <div class="colcondensed mob-colcenter">
+                                                        <div class="projet">Connaissances sectorielle</div>
+                                                    </div>
+                                                    <div class="colexpanded">
+                                                        <input type="text" name="connaissance-sectioriel" value="Energie, IT" data-reset="Energie, IT">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col100 infocontact infocompetence">
+                                                <div class="flex-grid  vcenter">
+                                                    <div class="colcondensed mob-colcenter">
+                                                        <div class="projet">Compétences métier</div>
+                                                    </div>
+                                                    <div class="colexpanded">
+                                                        <input type="text" name="competances-metier" value="Communication interne, communication RH" data-reset="Communication interne, communication RH">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col100 infocontact infoprojet">
+                                                <div class="flex-grid  vcenter">
+                                                    <div class="colcondensed mob-colcenter">
+                                                        <div class="projet">Projet réalisé</div>
+                                                    </div>
+                                                    <div class="colexpanded">
+                                                        <div class="flex-grid">
+                                                            <div class="col100">
+                                                                <div class="noico inline-block">
+                                                                    <input type="checkbox" value="" name="design" id="ch01" checked>
+                                                                    <input type="hidden">
+                                                                    <label for="ch01">Design</label>
+                                                                </div>
+                                                                <div class="noico inline-block">
+                                                                    <input type="checkbox" value="" name="marketing" id="ch02" checked>
+                                                                    <input type="hidden">
+                                                                    <label for="ch02">Marketing</label>
+                                                                </div>
+                                                                <div class="noico inline-block">
+                                                                    <input type="checkbox" value="" name="communication" id="ch03" checked>
+                                                                    <input type="hidden">
+                                                                    <label for="ch03">Communication</label>
+                                                                </div>
+                                                                <div class="noico inline-block">
+                                                                    <input type="checkbox" value="" name="eventrp" id="ch04" checked>
+                                                                    <input type="hidden">
+                                                                    <label for="ch04">Event/RP</label>
+                                                                </div>
+                                                                <div class="noico inline-block">
+                                                                    <input type="checkbox" value="" name="digital" id="ch05" checked>
+                                                                    <input type="hidden">
+                                                                    <label for="ch05">Digital</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tools">
+                                        <div class="btnico icoaddbl actaddcontact" title="Ajouter le contact"></div>
+                                        <div class="btnico icovalidbl actvalidcontact" title="Valider les modifications"></div>
+                                        <div class="btnico icocancelbl actcancelcontact" title="Annuler les modifications"></div>
+                                        <div class="btnico icodelbl actdelcontact" title="Supprimer le contact"></div>
+                                        <div class="btnico icolinkbl" title="Voir le profil">
+                                            <a href="profil.html"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="submitmsg"></div>
+                        </div>
+                        <!-- fin contactitem modele pour ajout -->
+                        <!-- début contactitem proprietaire -->
+                        <div class="contactitem proprietaire">
+                            <form action="#">
+                            <input type="hidden" value="" data-name="idmarque">
+                                <div class="sectionflex">
+                                    <div class="detail">
+                                        <div class="flex-grid">
+                                            <div class="col100">
+                                                <div class="flex-grid nowrap vcenter">
+                                                    <div class="colcondensed mob-col100">
+                                                        <div class="avatar"><img class="photo" src="<%=asset_path('avatar.jpg')%>"></div>
+                                                    </div>
+                                                    <div class="colexpanded mob-col100">
+                                                        <div class="flex-grid">
+                                                            <div class="col100 mob-colcenter">
+                                                                <div class="profilprenom">Luc 2</div>
+                                                                <div class="profilnom">Varez</div>
+                                                                <div class="profilagence">T2BH</div>
+                                                            </div>
+                                                            <div class="col100">
+                                                                <div class="noico">
+                                                                    <input type="text" data-reset="" value="En contact avec Total depuis 1998" name="nom" placeholder="Ancienneté de la relation commerciale">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col100 infocontact infoconnaissance">
+                                                <div class="flex-grid  vcenter">
+                                                    <div class="colcondensed mob-colcenter">
+                                                        <div class="projet">Connaissances sectorielle</div>
+                                                    </div>
+                                                    <div class="colexpanded">
+                                                        <input type="text" name="connaissance-sectioriel" value="Energie, IT" data-reset="Energie, IT">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col100 infocontact infocompetence">
+                                                <div class="flex-grid  vcenter">
+                                                    <div class="colcondensed mob-colcenter">
+                                                        <div class="projet">Compétences métier</div>
+                                                    </div>
+                                                    <div class="colexpanded">
+                                                        <input type="text" name="competances-metier" value="Communication interne, communication RH" data-reset="Communication interne, communication RH">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col100 infocontact infoprojet">
+                                                <div class="flex-grid  vcenter">
+                                                    <div class="colcondensed mob-colcenter">
+                                                        <div class="projet">Projet réalisé</div>
+                                                    </div>
+                                                    <div class="colexpanded">
+                                                        <div class="flex-grid">
+                                                            <div class="col100">
+                                                                <div class="noico inline-block">
+                                                                    <input type="checkbox" value="" name="design" id="ch11" >
+                                                                    <input type="hidden">
+                                                                    <label for="ch11">Design</label>
+                                                                </div>
+                                                                <div class="noico inline-block">
+                                                                    <input type="checkbox" value="" name="marketing" id="ch12" checked>
+                                                                    <input type="hidden">
+                                                                    <label for="ch12">Marketing</label>
+                                                                </div>
+                                                                <div class="noico inline-block">
+                                                                    <input type="checkbox" value="" name="communication" id="ch13" >
+                                                                    <input type="hidden">
+                                                                    <label for="ch13">Communication</label>
+                                                                </div>
+                                                                <div class="noico inline-block">
+                                                                    <input type="checkbox" value="" name="eventrp" id="ch14" checked>
+                                                                    <input type="hidden">
+                                                                    <label for="ch14">Event/RP</label>
+                                                                </div>
+                                                                <div class="noico inline-block">
+                                                                    <input type="checkbox" value="" name="digital" id="ch15" >
+                                                                    <input type="hidden">
+                                                                    <label for="ch15">Digital</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tools">
+                                        <div class="btnico icoaddbl actaddcontact" title="Ajouter le contact"></div>
+                                        <div class="btnico icovalidbl actvalidcontact" title="Valider les modifications"></div>
+                                        <div class="btnico icocancelbl actcancelcontact" title="Annuler les modifications"></div>
+                                        <div class="btnico icodelbl actdelcontact" title="Supprimer le contact"></div>
+                                        <div class="btnico icolinkbl" title="Voir le profil">
+                                            <a href="profil.html"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="submitmsg"></div>
+                        </div>
+                        <!-- fin contactitem proprietaire -->
+                        <!-- début contactitem non proprietaire -->
+                        <div class="contactitem">
+                            <form action="#">
+                            <input type="hidden" value="" data-name="idmarque">
+                                <div class="sectionflex">
+                                    <div class="detail">
+                                        <div class="flex-grid">
+                                            <div class="col100">
+                                                <div class="flex-grid nowrap vcenter">
+                                                    <div class="colcondensed mob-col100">
+                                                        <div class="avatar"><img class="photo" src="<%=asset_path('avatar.jpg')%>"></div>
+                                                    </div>
+                                                    <div class="colexpanded mob-col100">
+                                                        <div class="flex-grid">
+                                                            <div class="col100 mob-colcenter">
+                                                                <div class="profilprenom">Luc</div>
+                                                                <div class="profilnom">Varez</div>
+                                                                <div class="profilagence">T2BH</div>
+                                                            </div>
+                                                            <div class="col100">
+                                                                <div class="noico">
+                                                                    <input type="text" value="En contact avec Total depuis 1998" name="nom" placeholder="Ancienneté de la relation commerciale">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col100 infocontact infoconnaissance">
+                                                <div class="flex-grid  vcenter">
+                                                    <div class="colcondensed mob-colcenter">
+                                                        <div class="projet">Connaissances sectorielle</div>
+                                                    </div>
+                                                    <div class="colexpanded">
+                                                        <input type="text" name="connaissance-sectioriel" value="Energie, IT" data-reset="Energie, IT">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col100 infocontact infocompetence">
+                                                <div class="flex-grid  vcenter">
+                                                    <div class="colcondensed mob-colcenter">
+                                                        <div class="projet">Compétences métier</div>
+                                                    </div>
+                                                    <div class="colexpanded">
+                                                        <input type="text" name="competances-metier" value="Communication interne, communication RH" data-reset="Communication interne, communication RH">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col100 infocontact infoprojet">
+                                                <div class="flex-grid  vcenter">
+                                                    <div class="colcondensed mob-colcenter">
+                                                        <div class="projet">Projet réalisé</div>
+                                                    </div>
+                                                    <div class="colexpanded">
+                                                        <div class="flex-grid">
+                                                            <div class="col100">
+                                                                <div class="noico inline-block">
+                                                                    <input type="checkbox" value="" name="design" id="ch21" checked>
+                                                                    <input type="hidden">
+                                                                    <label for="ch21">Design</label>
+                                                                </div>
+                                                                <div class="noico inline-block">
+                                                                    <input type="checkbox" value="" name="marketing" id="ch22" checked>
+                                                                    <input type="hidden">
+                                                                    <label for="ch22">Marketing</label>
+                                                                </div>
+                                                                <div class="noico inline-block">
+                                                                    <input type="checkbox" value="" name="communication" id="ch23" checked>
+                                                                    <input type="hidden">
+                                                                    <label for="ch23">Communication</label>
+                                                                </div>
+                                                                <div class="noico inline-block">
+                                                                    <input type="checkbox" value="" name="eventrp" id="ch24" checked>
+                                                                    <input type="hidden">
+                                                                    <label for="ch24">Event/RP</label>
+                                                                </div>
+                                                                <div class="noico inline-block">
+                                                                    <input type="checkbox" value="" name="digital" id="ch25" checked>
+                                                                    <input type="hidden">
+                                                                    <label for="ch25">Digital</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tools">
+                                        <div class="btnico icoaddbl actaddcontact" title="Ajouter le contact"></div>
+                                        <div class="btnico icovalidbl actvalidcontact" title="Valider les modifications"></div>
+                                        <div class="btnico icocancelbl actcancelcontact" title="Annuler les modifications"></div>
+                                        <div class="btnico icodelbl actdelcontact" title="Supprimer le contact"></div>
+                                        <div class="btnico icolinkbl" title="Voir le profil">
+                                            <a href="profil.html"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="submitmsg"></div>
+                        </div>
+                        <!-- fin contactitem non proprietaire -->
+                    </div>
+                </div>
+            </div>
+            <div class="submitmsg"></div>
+        </section>
+    </div>
+</main>

@@ -77,7 +77,7 @@ class MarqueController < ApplicationController
         }
       end
     else
-      @responseJSON = {msg:"MAJ OK",marqueId:@new_marque.mar_marques_ident_nm}
+      @responseJSON = {msg:"MAJ OK",marqueId:@new_marque.mar_marques_ident_nm,marqueName:@new_marque.mar_marques_nom_tx}
       respond_to do |format|
         format.html
         format.json {
@@ -90,10 +90,26 @@ class MarqueController < ApplicationController
 
 
   def update
-    @marque = Marque.find(params["mar_marques_ident_nm"])
-    if @marque.update params
+    @par = marque_params_update
+    @marque = Marque.find(marque_params_update["mar_marques_ident_nm"])
+    if @par["mar_typ_ident_nm"] == ""
+      @par["mar_typ_ident_nm"] = nil
+    end
+    if @par["mar_sec_ident_nm"] == ""
+      @par["mar_sec_ident_nm"] = nil
+    end
+    if @par["mar_sta_jur_ident_nm"] == ""
+      @par["mar_sta_jur_ident_nm"] = nil
+    end
+    if @par["mar_sta_ident_nm"] == ""
+      @par["mar_sta_ident_nm"] = nil
+    end
+    if @par["mar_pays_ident_nm"] == ""
+      @par["mar_pays_ident_nm"] = nil
+    end
+    if @marque.update(@par)
       @marque.save
-      @responseJSON = {"msg":"MAJ OK", "marqueId": @marque.mar_marques_ident_nm}
+      @responseJSON = {"msg":"MAJ OK","marqueId": @marque.mar_marques_ident_nm}
       respond_to do |format|
         format.html
         format.json {
@@ -108,6 +124,11 @@ class MarqueController < ApplicationController
   def marque_params
     params.require("mar_marques_nom_tx")
     params.permit("mar_marques_nom_tx", "mar_sta_jur_ident_nm", "mar_sta_ident_nm", "mar_typ_ident_nm", "mar_sec_ident_nm", "mar_marques_ca_tx", "mar_marques_nb_salaries_nm", "mar_marques_adresse1_tx", "mar_marques_adresse2_tx", "mar_marques_cp_tx", "mar_marques_ville_tx", "mar_pays_ident_nm", "mar_marques_web_tx", "mar_marques_twitter_tx", "mar_marques_facebook_tx")
+  end
+
+  def marque_params_update
+    params.require("mar_marques_nom_tx")
+    params.permit("mar_marques_ident_nm", "mar_marques_nom_tx", "mar_sta_jur_ident_nm", "mar_sta_ident_nm", "mar_typ_ident_nm", "mar_sec_ident_nm", "mar_marques_ca_tx", "mar_marques_nb_salaries_nm", "mar_marques_adresse1_tx", "mar_marques_adresse2_tx", "mar_marques_cp_tx", "mar_marques_ville_tx", "mar_pays_ident_nm", "mar_marques_web_tx", "mar_marques_twitter_tx", "mar_marques_facebook_tx")
   end
 
 end

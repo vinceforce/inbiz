@@ -11,11 +11,14 @@ Rails.application.routes.draw do
   get '/' => 'marque#list'
 
   post '/marques/create/' => 'marque#create'
-  get '/marques/create/' => 'marque#create'
+  # get '/marques/create/' => 'marque#create'
+  patch '/marques/update/' => 'marque#update'
   get 'marques/mask/' => 'marque#new'
   get '/marques/mask/:id' => 'marque#edit'
   post '/marques/mask/' => 'marque#addcontact'
   get '/marques/:id' => 'marque#show'
+
+  post '/contacts/addtomarque' => 'contacts#addtomarque'
 
   get '/refdatabo/' => 'refdatabo#index'
 
