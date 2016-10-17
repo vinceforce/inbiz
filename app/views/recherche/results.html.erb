@@ -35,19 +35,293 @@
   </section>
 
 <% end %>
+<!-- Resultats de marque -->
+<div class="accordeon open">
+    <div><span class="grey"><%= @marques.size %></span> Résultat(s) de marques</div>
+    <div>
+        <section class="marquelist">
+          <% @marques.each do |marque| %>
+            <div class="marqueitem">
+                <div class="marquelogo">
+                  <a href="/marques/mask/<%= marque.mar_marques_ident_nm %>"><img src="<%= asset_path('logomarque.png') %>"></a>
+                </div>
+                <div class="marqueinfo">
+                    <div class="marquenom"><a href="/marques/mask/<%= marque.mar_marques_ident_nm %>"><%= marque.mar_marques_nom_tx %><sup><%= marque.mar_sta_jur_ident_nm ? StatutJuridique.find(marque.mar_sta_jur_ident_nm).mar_sta_jur_lib_tx : '' %></sup></a></div>
+                    <div class="marquestatut <%= marque.mar_sta_ident_nm ? @statuts.find(marque.mar_sta_ident_nm).mar_sta_lib_tx == "non actif" ? '' : @statuts.find(marque.mar_sta_ident_nm).mar_sta_lib_tx : '' %>"></div>
+                    <!-- <div class="marquestatut inbizz"></div> -->
+                </div>
+                <div class="marqueform">
+                    <label class="btnuploadimg" for="imgfilefield">
+                    <img id="imgfilepreview" src="" >
+                    <div class="uploadimg"><div class="btnico icoimg"></div></div>
+                </label>
+                    <input type="file" id="imgfilefield">
+                    <input type="text" value="" name="" placeholder="Nom de la marque (obligatoire)" disabled>
+                    <div>
+                        <div class="styled-select"><select name="" disabled>
+            <option value="">Statut juridique</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+                    </select></div>
+                    </div>
+                    <div></div>
+                    <div>
+                    <div class="styled-select"><%= select_tag "mar_sta_ident_nm", options_from_collection_for_select(@statuts, 'mar_sta_ident_nm', 'mar_sta_lib_tx', (@marque && @marque.mar_sta_ident_nm) ? @marque.mar_sta_ident_nm : nil), prompt: '-- Etat --', disabled: true %></div>
+                    </div>
+                </div>
+            </div>
+            <% end %>
+        </section>
+    </div>
+</div>
+<!-- Resultats de marque -->
 
-    <h1>Liste des marques</h1>
-    <% @marques.each do |marque| %>
-      <h2><%=marque.mar_marques_nom_tx%></h2>
-      <% @liensContact.where(mar_marques_ident_nm: marque.mar_marques_ident_nm).each do |lienContact| %>
-        <p>
-        <%=lienContact.cont_contacts_ident_nm%> - <%=@contacts.where(cont_contacts_ident_nm: lienContact.cont_contacts_ident_nm).first().cont_contacts_mail_tx%>
-        </p>
-      <% end %>
-    <% end %>
-    <h1>Liste des contacts</h1>
-    <% @contacts.each do |contact| %>
-      <h2><%=contact.cont_contacts_prenom_tx%> <%=contact.cont_contacts_nom_tx%></h2>
-    <% end %>
+<!-- Resultats de contacts -->
+<div class="accordeon">
+    <div><span class="grey"><%= @contacts.size %></span> Résultat(s) de contacts</div>
+    <div>
+        <section class="marquecontact">
+          <% @contacts.each do |c| %>
+          <% if LiensContactMarque.find_by(cont_contacts_ident_nm: c.cont_contacts_ident_nm).mar_cont_type_tx == 'Acheteur' %>
+            <div class="contactitem proprietaire resultlist">
+                <form action="#">
+                    <input type="hidden" value="" data-name="idmarque">
+                    <div class="sectionflex">
+                        <div class="detail">
+
+                            <div class="flex-grid">
+                                <div class="col33 mob-col100">
+            <div class="styled-select"><%= select_tag "cont_contacts_civilite_tx", options_for_select(["Monsieur","Madame"], c.cont_contacts_civilite_tx), prompt: "-- Civilité --" %></div>
+                                </div>
+                                <div class="col33 mob-col100">
+                                    <div class="noico">
+                                        <!-- <input type="text" value="Lorem ipsum dolor sit amet" data-name="nom" placeholder="Nom"> -->
+                                        <%= text_field_tag 'cont_contacts_nom_tx', c.cont_contacts_nom_tx, placeholder: 'Nom' %>
+                                    </div>
+                                </div>
+                                <div class="col33 mob-col100">
+                                    <div class="noico">
+                                        <%= text_field_tag 'cont_contacts_prenom_tx', c.cont_contacts_prenom_tx, placeholder: 'Prénom' %>
+                                    </div>
+                                </div>
+                                <div class="col100">
+                                    <div class="preico icoemail">
+                                        <%= text_field_tag 'cont_contacts_mail_tx', c.cont_contacts_mail_tx, placeholder: 'E-mail' %>
+                                    </div>
+                                </div>
+                                <div class="col33 mob-col100">
+                                    <div class="preico icoblank">
+                                        <%= text_field_tag 'cont_contacts_tel_fixe_tx', c.cont_contacts_tel_fixe_tx, placeholder: 'Tel fixe' %>
+                                    </div>
+                                </div>
+                                <div class="col33 mob-col100">
+                                    <div class="preico icotel">
+                                        <%= text_field_tag 'cont_contacts_tel_mobile_tx', c.cont_contacts_tel_mobile_tx, placeholder: 'Tel mobile' %>
+                                    </div>
+                                </div>
+                                <div class="col33 mob-col100">
+                                    <div class="preico icofax">
+                                        <%= text_field_tag 'cont_contacts_fax_tx', c.cont_contacts_fax_tx, placeholder: 'Fax' %>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="tools">
+                            <div class="btnico icoaddbl actaddcontact" title="Ajouter le contact"></div>
+                            <div class="btnico icovalidbl actvalidcontact" title="Valider les modifications"></div>
+                            <div class="btnico icocancelbl actcancelcontact" title="Annuler les modifications"></div>
+                            <div class="btnico icodelbl actdelcontact" title="Supprimer le contact"></div>
+                            <div class="btnico icolinkbl" title="Voir la marque">
+                                <a href="marque.html"></a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="submitmsg"></div>
+            </div>
+            <% end %>
+            <% if LiensContactMarque.find_by(cont_contacts_ident_nm: c.cont_contacts_ident_nm).mar_cont_type_tx == 'Marque' %>
+            <div class="contactitem resultlist">
+                <form action="#">
+                    <input type="hidden" value="" data-name="idmarque">
+                    <div class="sectionflex">
+                        <div class="detail">
+
+                            <div class="flex-grid">
+                                <div class="col25 mob-col100">
+                                  <div class="styled-select"><%= select_tag "cont_contacts_civilite_tx", options_for_select(["Monsieur","Madame"], c.cont_contacts_civilite_tx), prompt: "-- Civilité --" %></div>
+                                </div>
+                                <div class="col25 mob-col100">
+                                    <div class="noico">
+                                        <%= text_field_tag 'cont_contacts_nom_tx', c.cont_contacts_nom_tx, placeholder: 'Nom' %>
+                                    </div>
+                                </div>
+                                <div class="col25 mob-col100">
+                                    <div class="noico">
+                                        <%= text_field_tag 'cont_contacts_prenom_tx', c.cont_contacts_prenom_tx, placeholder: 'Prénom' %>
+                                    </div>
+                                </div>
+                                <div class="col25 mob-col100">
+                                  <div class="styled-select"><%= select_tag "cont_contacts_statut_tx", options_for_select(["Sta 1","Sta 1", "Sta 3"], c.cont_contacts_statut_tx), prompt: "-- Statut --" %></div>
+                                </div>
+                                <div class="col33 mob-col100">
+                                    <div class="noico">
+                                        <%= text_field_tag 'cont_contacts_fonction_tx', c.cont_contacts_fonction_tx, placeholder: 'Fonction' %>
+                                    </div>
+                                </div>
+                                <div class="col33 mob-col100">
+                                    <div class="noico">
+                                        <%= text_field_tag 'cont_contacts_direction_service_tx', c.cont_contacts_direction_service_tx, placeholder: 'Direction/Service' %>
+                                    </div>
+                                </div>
+                                <div class="col33 mob-col100">
+                                  <div class="styled-select"><%= select_tag "cont_contacts_pouvoir_tx", options_for_select(["Faible","Moyen", "Important"], c.cont_contacts_pouvoir_tx), prompt: "-- Son pouvoir de décision --" %></div>
+                                </div>
+                                <div class="col50 mob-col100">
+                                    <div class="preico icoemail">
+                                        <%= text_field_tag 'cont_contacts_mail_tx', c.cont_contacts_mail_tx, placeholder: 'E-mail' %>
+                                    </div>
+                                </div>
+                                <div class="col50 mob-col100">
+                                    <div class="preico icolinkedin">
+                                        <%= text_field_tag 'cont_contacts_linkedin_tx', c.cont_contacts_linkedin_tx, placeholder: 'LinkedIn' %>
+                                    </div>
+                                </div>
+                                <div class="col33 mob-col100">
+                                    <div class="preico icoblank">
+                                        <%= text_field_tag 'cont_contacts_tel_fixe_tx', c.cont_contacts_tel_fixe_tx, placeholder: 'Tel fixe' %>
+                                    </div>
+                                </div>
+                                <div class="col33 mob-col100">
+                                    <div class="preico icotel">
+                                        <%= text_field_tag 'cont_contacts_tel_mobile_tx', c.cont_contacts_tel_mobile_tx, placeholder: 'Tel mobile' %>
+                                    </div>
+                                </div>
+                                <div class="col33 mob-col100">
+                                    <div class="preico icofax">
+                                        <%= text_field_tag 'cont_contacts_fax_tx', c.cont_contacts_fax_tx, placeholder: 'Fax' %>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="tools">
+                            <div class="btnico icoaddbl actaddcontact" title="Ajouter le contact"></div>
+                            <div class="btnico icovalidbl actvalidcontact" title="Valider les modifications"></div>
+                            <div class="btnico icocancelbl actcancelcontact" title="Annuler les modifications"></div>
+                            <div class="btnico icodelbl actdelcontact" title="Supprimer le contact"></div>
+                            <div class="btnico icolinkbl" title="Voir la marque">
+                                <a href="marque.html"></a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="submitmsg"></div>
+            </div>
+            <% end %>
+            <% if LiensContactMarque.find_by(cont_contacts_ident_nm: c.cont_contacts_ident_nm).mar_cont_type_tx == 'Allié' %>
+            <div class="contactitem resultlist">
+                <form action="#">
+                    <input type="hidden" value="" data-name="idmarque">
+                    <div class="sectionflex">
+                        <div class="detail">
+                            <div class="flex-grid">
+                                <div class="col100">
+                                    <div class="flex-grid nowrap vcenter">
+                                        <div class="colcondensed mob-col100">
+                                            <div class="avatar"><img class="photo" src="media/images/avatar.jpg"></div>
+                                        </div>
+                                        <div class="colexpanded mob-col100">
+                                            <div class="flex-grid">
+                                                <div class="col100 mob-colcenter">
+                                                    <div class="profilprenom">Luc</div>
+                                                    <div class="profilnom">Varez</div>
+                                                    <div class="profilagence">T2BH</div>
+                                                </div>
+                                                <div class="col100">
+                                                    <div class="noico">
+                                                        <input type="text" value="En contact avec Total depuis 1998" name="nom" placeholder="Ancienneté de la relation commerciale">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col100 infocontact infoconnaissance">
+                                    <div class="flex-grid  vcenter">
+                                        <div class="colcondensed mob-colcenter">
+                                            <div class="projet">Connaissances sectorielle</div>
+                                        </div>
+                                        <div class="colexpanded">
+                                            <input type="text" name="connaissance-sectioriel" value="Energie, IT" data-reset="Energie, IT">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col100 infocontact infocompetence">
+                                    <div class="flex-grid  vcenter">
+                                        <div class="colcondensed mob-colcenter">
+                                            <div class="projet">Compétences métier</div>
+                                        </div>
+                                        <div class="colexpanded">
+                                            <input type="text" name="competances-metier" value="Communication interne, communication RH" data-reset="Communication interne, communication RH">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col100 infocontact infoprojet">
+                                    <div class="flex-grid  vcenter">
+                                        <div class="colcondensed mob-colcenter">
+                                            <div class="projet">Projet réalisé</div>
+                                        </div>
+                                        <div class="colexpanded">
+                                            <div class="flex-grid">
+                                                <div class="col100">
+                                                    <div class="noico inline-block">
+                                                        <input type="checkbox" value="" name="design" id="ch11" checked>
+                                                        <label for="ch11">Design</label>
+                                                    </div>
+                                                    <div class="noico inline-block">
+                                                        <input type="checkbox" value="" name="marketing" id="ch12" checked>
+                                                        <label for="ch12">Marketing</label>
+                                                    </div>
+                                                    <div class="noico inline-block">
+                                                        <input type="checkbox" value="" name="communication" id="ch13" checked>
+                                                        <label for="ch13">Communication</label>
+                                                    </div>
+                                                    <div class="noico inline-block">
+                                                        <input type="checkbox" value="" name="eventrp" id="ch14" checked>
+                                                        <label for="ch14">Event/RP</label>
+                                                    </div>
+                                                    <div class="noico inline-block">
+                                                        <input type="checkbox" value="" name="digital" id="ch15" checked>
+                                                        <label for="ch15">Digital</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tools">
+                            <div class="btnico icoaddbl actaddcontact" title="Ajouter le contact"></div>
+                            <div class="btnico icovalidbl actvalidcontact" title="Valider les modifications"></div>
+                            <div class="btnico icocancelbl actcancelcontact" title="Annuler les modifications"></div>
+                            <div class="btnico icodelbl actdelcontact" title="Supprimer le contact"></div>
+                            <div class="btnico icolinkbl" title="Voir le profil">
+                                <a href="profil.html"></a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="submitmsg"></div>
+            </div>
+            <% end %>
+            <% end %>
+        </section>
+    </div>
+</div>
+<!-- Resultats de contacts -->
   </div>
 </main>

@@ -1,6 +1,10 @@
 class MarqueController < ApplicationController
   def show
     @sectionclassadd = ''
+    @statuts = Statut.all.order("mar_sta_lib_tx")
+    @types = Type.all.order("mar_typ_lib_tx")
+    @secteurs = Secteur.all.order("mar_sec_lib_tx")
+    @pays = Pays.all.order("mar_pays_lib_tx")
   end
 
   def new
