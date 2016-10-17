@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20161017124008) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 0) do
     t.string   "cont_contacts_tel_fixe_tx",          limit: 50
     t.string   "cont_contacts_facebook_tx",          limit: 255
     t.string   "cont_contacts_comp_metiers_tx",      limit: 500
-    t.string   "cont_contacts_conn_secteur_tx",         limit: 500
+    t.string   "cont_contacts_conn_secteur_tx",      limit: 500
     t.string   "cont_contacts_interets_tx",          limit: 500
     t.string   "cont_contacts_statut_tx",            limit: 5
     t.string   "cont_contacts_maj_user_tx",          limit: 100
@@ -99,11 +99,21 @@ ActiveRecord::Schema.define(version: 0) do
     t.string "mar_typ_lib_tx", limit: 30
   end
 
-  add_foreign_key "app_mar_contacts", "\"app_cont_contacts\"", column: "cont_contacts_ident_nm", primary_key: "cont_contacts_ident_nm", name: "fk_app_cont_contacts"
-  add_foreign_key "app_mar_contacts", "\"app_mar_marques\"", column: "mar_marques_ident_nm", primary_key: "mar_marques_ident_nm", name: "fk_app_mar_marques"
-  add_foreign_key "app_mar_marques", "\"rfs_mar_pays\"", column: "mar_pays_ident_nm", primary_key: "mar_pays_ident_nm", name: "fk_marque_pays"
-  add_foreign_key "app_mar_marques", "\"rfs_mar_secteurs\"", column: "mar_sec_ident_nm", primary_key: "mar_sec_ident_nm", name: "fk_marque_secteur"
-  add_foreign_key "app_mar_marques", "\"rfs_mar_statuts\"", column: "mar_sta_ident_nm", primary_key: "mar_sta_ident_nm", name: "fk_marque_statut"
-  add_foreign_key "app_mar_marques", "\"rfs_mar_statuts_juridiques\"", column: "mar_sta_jur_ident_nm", primary_key: "mar_sta_jur_ident_nm", name: "fk_marque_statut_juridique"
-  add_foreign_key "app_mar_marques", "\"rfs_mar_types\"", column: "mar_typ_ident_nm", primary_key: "mar_typ_ident_nm", name: "fk_marque_type"
+  create_table "users", force: :cascade do |t|
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "name"
+    t.string   "oauth_token"
+    t.datetime "oauth_expires_at"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_foreign_key "app_mar_contacts", "app_cont_contacts", column: "cont_contacts_ident_nm", primary_key: "cont_contacts_ident_nm", name: "fk_app_cont_contacts"
+  add_foreign_key "app_mar_contacts", "app_mar_marques", column: "mar_marques_ident_nm", primary_key: "mar_marques_ident_nm", name: "fk_app_mar_marques"
+  add_foreign_key "app_mar_marques", "rfs_mar_pays", column: "mar_pays_ident_nm", primary_key: "mar_pays_ident_nm", name: "fk_marque_pays"
+  add_foreign_key "app_mar_marques", "rfs_mar_secteurs", column: "mar_sec_ident_nm", primary_key: "mar_sec_ident_nm", name: "fk_marque_secteur"
+  add_foreign_key "app_mar_marques", "rfs_mar_statuts", column: "mar_sta_ident_nm", primary_key: "mar_sta_ident_nm", name: "fk_marque_statut"
+  add_foreign_key "app_mar_marques", "rfs_mar_statuts_juridiques", column: "mar_sta_jur_ident_nm", primary_key: "mar_sta_jur_ident_nm", name: "fk_marque_statut_juridique"
+  add_foreign_key "app_mar_marques", "rfs_mar_types", column: "mar_typ_ident_nm", primary_key: "mar_typ_ident_nm", name: "fk_marque_type"
 end

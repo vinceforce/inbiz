@@ -15,7 +15,15 @@
           <% end %>
         </div>
         <div class="menu">
-            <div class="btnico icoprofil"><a href="profil.html"></a></div>
+          <% if current_user %>
+            Signed in as <strong><%= current_user.name %></strong>!
+            <%= link_to "Sign out", signout_path, id: "sign_out" %>
+            <% else %>
+            <div class="btnico icoprofil">
+            <%= link_to "", "/auth/google_oauth2", id: "sign_in" %>
+            </div>
+            <% end %>
+            <!-- <div class="btnico icoprofil"><a href="profil.html"></a></div> -->
         </div>
     </div>
 </header>
