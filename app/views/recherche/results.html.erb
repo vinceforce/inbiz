@@ -9,7 +9,7 @@
 <% if @marques.size + @contacts.size == 0 %>
   <section class="subheader">
       <div>
-          <form action="/marques/edit/" method="post">
+          <form action="/marques/addcontact/" method="post">
               <div class="flex-grid hcenter vcenter ccenter spadding">
                   <div class="col100">
                       <p class="ta-center">Votre recherche n'a donné aucun résultat. Vous pouvez soit effectuer une autre recherche, soit</p>
@@ -19,7 +19,7 @@
                   </div>
                   <div class="mob-col100">ou</div>
                   <div class="mob-col100">
-                      <div class="styled-select nomargin" style="margin-top:9px"><select name="marque" class="actMarque">
+                      <div class="styled-select nomargin" style="margin-top:9px"><select name="mar_marques_ident_nm" class="actMarque">
                         <option value="">Pour ajouter un contact sélectionnez une marque</option>
                         <% @toutes_les_marques.each do |m| %>
                           <option value="<%= m.mar_marques_ident_nm %>"><%= m.mar_marques_nom_tx %></option>

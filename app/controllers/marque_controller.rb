@@ -1,5 +1,4 @@
 class MarqueController < ApplicationController
-  # skip_before_action :verify_authenticity_token
   def show
     @sectionclassadd = ''
   end
@@ -12,6 +11,9 @@ class MarqueController < ApplicationController
     @types = Type.all.order("mar_typ_lib_tx")
     @secteurs = Secteur.all.order("mar_sec_lib_tx")
     @pays = Pays.all.order("mar_pays_lib_tx")
+    @contacts_acheteurs = []
+    @contacts_marque = []
+    @contacts_allies = []
   end
 
   def list
@@ -37,6 +39,23 @@ class MarqueController < ApplicationController
     @types = Type.all.order("mar_typ_lib_tx")
     @secteurs = Secteur.all.order("mar_sec_lib_tx")
     @pays = Pays.all.order("mar_pays_lib_tx")
+    # TODO : remplacer boucle par une vue +++++++++++
+    @lienscontactsmarquesAcheteurs = LiensContactMarque.where("mar_marques_ident_nm = #{@marque.mar_marques_ident_nm} AND mar_cont_type_tx = 'Acheteur'")
+    @contacts_acheteurs = []
+    @lienscontactsmarquesAcheteurs.each do |l|
+      @contacts_acheteurs.push(Contact.find(l.cont_contacts_ident_nm))
+    end
+    @contacts_marque = []
+    @lienscontactsmarquesMarque = LiensContactMarque.where("mar_marques_ident_nm = #{@marque.mar_marques_ident_nm} AND mar_cont_type_tx = 'Marque'")
+    @lienscontactsmarquesMarque.each do |l|
+      @contacts_marque.push(Contact.find(l.cont_contacts_ident_nm))
+    end
+    @contacts_allies = []
+    @lienscontactsmarquesAllies = LiensContactMarque.where("mar_marques_ident_nm = #{@marque.mar_marques_ident_nm} AND mar_cont_type_tx = 'Allié'")
+    @lienscontactsmarquesAllies.each do |l|
+      @contacts_allies.push(Contact.find(l.cont_contacts_ident_nm))
+    end
+    # TODO : remplacer boucle par une vue +++++++++++
   end
 
   def create
@@ -56,14 +75,6 @@ class MarqueController < ApplicationController
     if @par["mar_pays_ident_nm"] == ""
       @par["mar_pays_ident_nm"] = nil
     end
-
-    # @new_marque = Marque.new
-    # @par.each_key do |k|
-    #   if k != "mar_marques_ident_nm"
-    #     @new_marque[k] = @par[k]
-    #   end
-    # end
-    # @new_marque.save
 
     @new_marque = Marque.create(@par)
 
@@ -119,6 +130,10 @@ class MarqueController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def addcontact
+    redirect_to '/marques/mask/' + params["mar_marques_ident_nm"]
   end
 
   def marque_params
