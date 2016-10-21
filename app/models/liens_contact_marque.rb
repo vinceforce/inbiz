@@ -10,4 +10,6 @@ class LiensContactMarque < ActiveRecord::Base
     has_many :Marque,
       :foreign_key => 'fk_app_mar_marques',
       :primary_key => 'mar_marques_ident_nm'
+# TODO : ajouter contrôle de saisie sur champs obligatoires et unicités de valeur (2 clés primaires)
+
 end

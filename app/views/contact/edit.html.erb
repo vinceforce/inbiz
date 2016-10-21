@@ -1,0 +1,99 @@
+<main class="page-content-wrapper" role="main">
+    <div class="site-content">
+        <section class="header">
+            <div class="btnico icoback actback"><a href="#"></a></div>
+            <div class="pagetitle">Mon Profil R9.</div>
+        </section>
+        <!--
+section profildetail,
+ajouter class "proprietaire" pour obtenir le masque d'édition -->
+        <section class="profildetail<%= @sectionclassadd %> sectionflex">
+            <div class="avatar"><img class="photo" src="<%= asset_path('avatar.jpg') %>"></div>
+            <div class="detail">
+                <div class="detailup">
+                    <div class="detailleft">
+                        <div class="profilprenom"><%= @contact.cont_contacts_prenom_tx %></div>
+                        <div class="profilnom"><%= @contact.cont_contacts_nom_tx %></div>
+                        <div class="profilagence"><%= @contact.cont_contacts_societe_tx %></div>
+                    </div>
+                    <div class="detailright">
+                        <div class="profilinfo preico icofacebook">
+                            <a href="<%= @contact.cont_contacts_facebook_tx %>"><%= @contact.cont_contacts_facebook_tx %></a>
+                        </div>
+                        <div class="profilinfo preico icotel">
+                            <%= @contact.cont_contacts_tel_mobile_tx %> / <%= @contact.cont_contacts_tel_fixe_tx %></div>
+                        <div class="profilinfo preico icoemail">
+                            <a href="mailto:<%= @contact.cont_contacts_mail_tx %>"><%= @contact.cont_contacts_mail_tx %></a>
+                        </div>
+                    </div>
+                </div>
+                <%= form_tag('/contacts/update/', method: 'patch', multipart: true) do %>
+                  <div class="detaildown">
+                      <div class="detailleft">Connaissances sectorielles</div>
+                      <div class="detailright">
+                          <%= text_field_tag 'cont_contacts_conn_secteur_tx', @contact.cont_contacts_conn_secteur_tx, placeholder: 'Exemple : Energie, IT' %>
+                      </div>
+                      <div class="detailleft">Compétences métier</div>
+                      <div class="detailright">
+                          <%= text_field_tag 'cont_contacts_comp_metiers_tx', @contact.cont_contacts_comp_metiers_tx, placeholder: 'Exemple : Communication interne, communication RH' %>
+                      </div>
+                      <div class="detailleft">Intérêts</div>
+                      <div class="detailright">
+                          <%= text_field_tag 'cont_contacts_interets_tx', @contact.cont_contacts_interets_tx, placeholder: 'Exemple : Equitation, cheval' %>
+                      </div>
+                  </div>
+                <% end %>
+            </div>
+            <div class="tools">
+                <div class="btnico icovalidbl actvalidprofil" title="Valider les modifications"></div>
+                <div class="btnico icocancelbl actcancelprofil" title="Annuler les modifications"></div>
+            </div>
+            <div class="submitmsg"></div>
+        </section>
+        <section class="subheader">
+            <div>
+                <div class="pagesubtitle">marques et contacts.</div>
+                Pour ajouter une marque, merci d'effectuer d'abord une recherche afin de vérifier que celle-ci n'existe pas déjà
+            </div>
+        </section>
+        <section class="marquelist">
+          <% @lienscontactmarque.each do |lcm| %>
+            <div class="marqueitem">
+                <div class="marquelogo">
+                    <a href="/marques/mask/<%= lcm["mar_marques_ident_nm"] %>"><img src="<%= lcm["mar_marques_logo_tx"] %>"></a>
+                </div>
+                <div class="marqueinfo">
+                    <div class="marquenom"><a href="/marques/mask/<%= lcm["mar_marques_ident_nm"] %>"><%= lcm["mar_marques_nom_tx"] %><sup><%= @statuts_juridiques.find(lcm["mar_sta_jur_ident_nm"]).mar_sta_jur_lib_tx %></sup></a></div>
+                    <div class="marquestatut <%= lcm["mar_sta_ident_nm"] ? @statuts.find(lcm["mar_sta_ident_nm"]).mar_sta_lib_tx == "non actif" ? '' : @statuts.find(lcm["mar_sta_ident_nm"]).mar_sta_lib_tx : '' %>"></div>
+                </div>
+                <div class="marqueform">
+                    <label class="btnuploadimg" for="imgfilefield">
+                            <img id="imgfilepreview" src="" data-reset="">
+                            <div class="uploadimg"><div class="btnico icoimg"></div></div>
+                        </label>
+                    <input type="file" id="imgfilefield">
+                    <input type="text" data-reset="" value="" name="" placeholder="Nom de la marque (obligatoire)" disabled>
+                    <div>
+                        <div class="styled-select"><select name="mar_sta_jur_ident_nm" data-reset="" disabled>
+                    <option value="">Statut juridique</option>
+                    <% @statuts_juridiques.each do |sj| %>
+                    <option value="<%= sj.mar_sta_jur_ident_nm %>"<%= (lcm["mar_sta_jur_ident_nm"] == sj.mar_sta_jur_ident_nm) ? ' selected' : '' %>><%= sj.mar_sta_jur_lib_tx %></option>
+                    <% end %>
+                            </select></div>
+                    </div>
+                    <div></div>
+                    <div>
+                        <div class="styled-select">
+                            <select name="mar_sta_ident_nm" data-reset="" disabled>
+                    <option value="">Etat</option>
+                    <% @statuts.each do |s| %>
+                    <option value="<%= s.mar_sta_ident_nm %>"<%= (lcm["mar_sta_ident_nm"] == s.mar_sta_ident_nm) ? ' selected' : '' %>><%= s.mar_sta_lib_tx %></option>
+                            </select></div>
+                    <% end %>
+                    </div>
+                </div>
+            </div>
+          <% end %>
+        </section>
+    </div>
+</main>

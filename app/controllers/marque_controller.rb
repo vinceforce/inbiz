@@ -36,7 +36,9 @@ class MarqueController < ApplicationController
   def edit
     @marque_id = params[:id]
     @marque = Marque.find(@marque_id)
-    @sectionclassadd = ' proprietaire'
+    if @marque.mar_marques_maj_user_tx == session[:user_id].to_s
+      @sectionclassadd = ' proprietaire'
+    end
     @showmarquebuttons = true
     @statutsjuridiques = StatutJuridique.all.order("mar_sta_jur_lib_tx")
     @statuts = Statut.all.order("mar_sta_lib_tx")
@@ -54,10 +56,25 @@ class MarqueController < ApplicationController
     @lienscontactsmarquesMarque.each do |l|
       @contacts_marque.push(Contact.find(l.cont_contacts_ident_nm))
     end
+    @current_user_email = User.find(session[:user_id])["email"]
+    @current_contact = Contact.find_by(cont_contacts_mail_tx: @current_user_email)
+    @current_lien_marque = LiensContactMarque.where(cont_contacts_ident_nm: @current_contact.cont_contacts_ident_nm, mar_marques_ident_nm: @marque_id).first
+    @current_contact_est_lie = false
     @contacts_allies = []
     @lienscontactsmarquesAllies = LiensContactMarque.where("mar_marques_ident_nm = #{@marque.mar_marques_ident_nm} AND mar_cont_type_tx = 'Allié'")
     @lienscontactsmarquesAllies.each do |l|
-      @contacts_allies.push(Contact.find(l.cont_contacts_ident_nm))
+      @cont = Contact.find(l.cont_contacts_ident_nm).attributes
+      @cont["mar_marques_ident_nm"] = l.mar_marques_ident_nm
+      @cont["mar_cont_relation_tx"] = l.mar_cont_relation_tx
+      @cont["mar_cont_design_bl"] = l.mar_cont_design_bl
+      @cont["mar_cont_marketing_bl"] = l.mar_cont_marketing_bl
+      @cont["mar_cont_communication_bl"] = l.mar_cont_communication_bl
+      @cont["mar_cont_event_bl"] = l.mar_cont_event_bl
+      @cont["mar_cont_digital_bl"] = l.mar_cont_digital_bl
+      @contacts_allies.push(@cont)
+      if l.cont_contacts_ident_nm == @current_contact.cont_contacts_ident_nm
+        @current_contact_est_lie = true
+      end
     end
     # TODO : remplacer boucle par une vue +++++++++++
   end
@@ -79,7 +96,8 @@ class MarqueController < ApplicationController
     if @par["mar_pays_ident_nm"] == ""
       @par["mar_pays_ident_nm"] = nil
     end
-
+    @par["mar_marques_maj_user_tx"] = session[:user_id].to_s
+    @par["mar_marques_maj_date_dt"] = Time.current()
     @new_marque = Marque.create(@par)
 
     if @new_marque.errors.size != 0
@@ -106,6 +124,8 @@ class MarqueController < ApplicationController
 
   def update
     @par = marque_params_update
+    @par["mar_marques_maj_user_tx"] = session[:user_id].to_s
+    @par["mar_marques_maj_date_dt"] = Time.current()
     @marque = Marque.find(marque_params_update["mar_marques_ident_nm"])
     if @par["mar_typ_ident_nm"] == ""
       @par["mar_typ_ident_nm"] = nil

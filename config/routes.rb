@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   # end
   get '/recherche/autocomplete' => 'recherche#autocomplete'
   post '/recherche' => 'recherche#results'
+  get '/recherche' => 'home#show'
 
   # get '/' => 'marque#list'
 
@@ -29,6 +30,10 @@ Rails.application.routes.draw do
   # patch 'contacts/update' => 'contact#updatecontact'
   post 'contacts/update' => 'contact#updatecontact'
   post 'contacts/delete' => 'contact#destroy'
+  post '/contacts/addcontactallie/' => 'contact#addcontactallie'
+  post '/contacts/updateallie/' => 'contact#updatecontactallie'
+  get '/contacts/edit/:id' => 'contact#edit'
+  patch 'contacts/update/' => "contact#updateprofil" # mise à jour de contact pour les alliés R9
 
   get '/refdatabo/' => 'refdatabo#index'
 

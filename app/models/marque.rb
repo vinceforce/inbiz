@@ -4,4 +4,5 @@ class Marque < ActiveRecord::Base
 
   belongs_to :LiensContactMarque
   belongs_to :Pays
+  # TODO : ajouter contrôle de saisie sur champs obligatoires et unicités de valeur
 end

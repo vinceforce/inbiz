@@ -16,7 +16,7 @@
         </div>
         <div class="menu">
           <% if current_user %>
-            Signed in as <strong><%= current_user.name %></strong>!
+            Signed in as <a href="/contacts/edit/<%= current_contact ? current_contact.cont_contacts_ident_nm : '' %>"><strong><%= current_user.name %></strong></a>!
             <%= link_to "Sign out", signout_path, id: "sign_out" %>
             <% else %>
             <div class="btnico icoprofil">

@@ -83,7 +83,7 @@
     <div>
         <section class="marquecontact">
           <% @contacts.each do |c| %>
-          <% if LiensContactMarque.find_by(cont_contacts_ident_nm: c.cont_contacts_ident_nm).mar_cont_type_tx == 'Acheteur' %>
+          <% if c["mar_cont_type_tx"] == 'Acheteur' %>
             <div class="contactitem proprietaire resultlist">
                 <form action="#">
                     <input type="hidden" value="" data-name="idmarque">
@@ -92,37 +92,37 @@
 
                             <div class="flex-grid">
                                 <div class="col33 mob-col100">
-            <div class="styled-select"><%= select_tag "cont_contacts_civilite_tx", options_for_select(["Monsieur","Madame"], c.cont_contacts_civilite_tx), prompt: "-- Civilité --" %></div>
+            <div class="styled-select"><%= select_tag "cont_contacts_civilite_tx", options_for_select(["Monsieur","Madame"], c["cont_contacts_civilite_tx"]), prompt: "-- Civilité --" %></div>
                                 </div>
                                 <div class="col33 mob-col100">
                                     <div class="noico">
                                         <!-- <input type="text" value="Lorem ipsum dolor sit amet" data-name="nom" placeholder="Nom"> -->
-                                        <%= text_field_tag 'cont_contacts_nom_tx', c.cont_contacts_nom_tx, placeholder: 'Nom' %>
+                                        <%= text_field_tag 'cont_contacts_nom_tx', c["cont_contacts_nom_tx"], placeholder: 'Nom' %>
                                     </div>
                                 </div>
                                 <div class="col33 mob-col100">
                                     <div class="noico">
-                                        <%= text_field_tag 'cont_contacts_prenom_tx', c.cont_contacts_prenom_tx, placeholder: 'Prénom' %>
+                                        <%= text_field_tag 'cont_contacts_prenom_tx', c["cont_contacts_prenom_tx"], placeholder: 'Prénom' %>
                                     </div>
                                 </div>
                                 <div class="col100">
                                     <div class="preico icoemail">
-                                        <%= text_field_tag 'cont_contacts_mail_tx', c.cont_contacts_mail_tx, placeholder: 'E-mail' %>
+                                        <%= text_field_tag 'cont_contacts_mail_tx', c["cont_contacts_mail_tx"], placeholder: 'E-mail' %>
                                     </div>
                                 </div>
                                 <div class="col33 mob-col100">
                                     <div class="preico icoblank">
-                                        <%= text_field_tag 'cont_contacts_tel_fixe_tx', c.cont_contacts_tel_fixe_tx, placeholder: 'Tel fixe' %>
+                                        <%= text_field_tag 'cont_contacts_tel_fixe_tx', c["cont_contacts_tel_fixe_tx"], placeholder: 'Tel fixe' %>
                                     </div>
                                 </div>
                                 <div class="col33 mob-col100">
                                     <div class="preico icotel">
-                                        <%= text_field_tag 'cont_contacts_tel_mobile_tx', c.cont_contacts_tel_mobile_tx, placeholder: 'Tel mobile' %>
+                                        <%= text_field_tag 'cont_contacts_tel_mobile_tx', c["cont_contacts_tel_mobile_tx"], placeholder: 'Tel mobile' %>
                                     </div>
                                 </div>
                                 <div class="col33 mob-col100">
                                     <div class="preico icofax">
-                                        <%= text_field_tag 'cont_contacts_fax_tx', c.cont_contacts_fax_tx, placeholder: 'Fax' %>
+                                        <%= text_field_tag 'cont_contacts_fax_tx', c["cont_contacts_fax_tx"], placeholder: 'Fax' %>
                                     </div>
                                 </div>
                             </div>
@@ -133,8 +133,8 @@
                             <div class="btnico icovalidbl actvalidcontact" title="Valider les modifications"></div>
                             <div class="btnico icocancelbl actcancelcontact" title="Annuler les modifications"></div>
                             <div class="btnico icodelbl actdelcontact" title="Supprimer le contact"></div>
-                            <div class="btnico icolinkbl" title="Voir la marque">
-                                <a href="marque.html"></a>
+                            <div class="btnico icolinkbl" title="Voir le contact">
+                                <a href="/marques/mask/"<%= c["mar_marques_ident_nm"] %>></a>
                             </div>
                         </div>
                     </div>
@@ -142,7 +142,7 @@
                 <div class="submitmsg"></div>
             </div>
             <% end %>
-            <% if LiensContactMarque.find_by(cont_contacts_ident_nm: c.cont_contacts_ident_nm).mar_cont_type_tx == 'Marque' %>
+            <% if c["mar_cont_type_tx"] == 'Marque' %>
             <div class="contactitem resultlist">
                 <form action="#">
                     <input type="hidden" value="" data-name="idmarque">
@@ -151,57 +151,57 @@
 
                             <div class="flex-grid">
                                 <div class="col25 mob-col100">
-                                  <div class="styled-select"><%= select_tag "cont_contacts_civilite_tx", options_for_select(["Monsieur","Madame"], c.cont_contacts_civilite_tx), prompt: "-- Civilité --" %></div>
+                                  <div class="styled-select"><%= select_tag "cont_contacts_civilite_tx", options_for_select(["Monsieur","Madame"], c["cont_contacts_civilite_tx"]), prompt: "-- Civilité --" %></div>
                                 </div>
                                 <div class="col25 mob-col100">
                                     <div class="noico">
-                                        <%= text_field_tag 'cont_contacts_nom_tx', c.cont_contacts_nom_tx, placeholder: 'Nom' %>
+                                        <%= text_field_tag 'cont_contacts_nom_tx', c["cont_contacts_nom_tx"], placeholder: 'Nom' %>
                                     </div>
                                 </div>
                                 <div class="col25 mob-col100">
                                     <div class="noico">
-                                        <%= text_field_tag 'cont_contacts_prenom_tx', c.cont_contacts_prenom_tx, placeholder: 'Prénom' %>
+                                        <%= text_field_tag 'cont_contacts_prenom_tx', c["cont_contacts_prenom_tx"], placeholder: 'Prénom' %>
                                     </div>
                                 </div>
                                 <div class="col25 mob-col100">
-                                  <div class="styled-select"><%= select_tag "cont_contacts_statut_tx", options_for_select(["Sta 1","Sta 1", "Sta 3"], c.cont_contacts_statut_tx), prompt: "-- Statut --" %></div>
+                                  <div class="styled-select"><%= select_tag "cont_contacts_statut_tx", options_for_select(["Sta 1","Sta 1", "Sta 3"], c["cont_contacts_statut_tx"]), prompt: "-- Statut --" %></div>
                                 </div>
                                 <div class="col33 mob-col100">
                                     <div class="noico">
-                                        <%= text_field_tag 'cont_contacts_fonction_tx', c.cont_contacts_fonction_tx, placeholder: 'Fonction' %>
+                                        <%= text_field_tag 'cont_contacts_fonction_tx', c["cont_contacts_fonction_tx"], placeholder: 'Fonction' %>
                                     </div>
                                 </div>
                                 <div class="col33 mob-col100">
                                     <div class="noico">
-                                        <%= text_field_tag 'cont_contacts_direction_service_tx', c.cont_contacts_direction_service_tx, placeholder: 'Direction/Service' %>
+                                        <%= text_field_tag 'cont_contacts_direction_service_tx', c["cont_contacts_direction_service_tx"], placeholder: 'Direction/Service' %>
                                     </div>
                                 </div>
                                 <div class="col33 mob-col100">
-                                  <div class="styled-select"><%= select_tag "cont_contacts_pouvoir_tx", options_for_select(["Faible","Moyen", "Important"], c.cont_contacts_pouvoir_tx), prompt: "-- Son pouvoir de décision --" %></div>
+                                  <div class="styled-select"><%= select_tag "cont_contacts_pouvoir_tx", options_for_select(["Faible","Moyen", "Important"], c["cont_contacts_pouvoir_tx"]), prompt: "-- Son pouvoir de décision --" %></div>
                                 </div>
                                 <div class="col50 mob-col100">
                                     <div class="preico icoemail">
-                                        <%= text_field_tag 'cont_contacts_mail_tx', c.cont_contacts_mail_tx, placeholder: 'E-mail' %>
+                                        <%= text_field_tag 'cont_contacts_mail_tx', c["cont_contacts_mail_tx"], placeholder: 'E-mail' %>
                                     </div>
                                 </div>
                                 <div class="col50 mob-col100">
                                     <div class="preico icolinkedin">
-                                        <%= text_field_tag 'cont_contacts_linkedin_tx', c.cont_contacts_linkedin_tx, placeholder: 'LinkedIn' %>
+                                        <%= text_field_tag 'cont_contacts_linkedin_tx', c["cont_contacts_linkedin_tx"], placeholder: 'LinkedIn' %>
                                     </div>
                                 </div>
                                 <div class="col33 mob-col100">
                                     <div class="preico icoblank">
-                                        <%= text_field_tag 'cont_contacts_tel_fixe_tx', c.cont_contacts_tel_fixe_tx, placeholder: 'Tel fixe' %>
+                                        <%= text_field_tag 'cont_contacts_tel_fixe_tx', c["cont_contacts_tel_fixe_tx"], placeholder: 'Tel fixe' %>
                                     </div>
                                 </div>
                                 <div class="col33 mob-col100">
                                     <div class="preico icotel">
-                                        <%= text_field_tag 'cont_contacts_tel_mobile_tx', c.cont_contacts_tel_mobile_tx, placeholder: 'Tel mobile' %>
+                                        <%= text_field_tag 'cont_contacts_tel_mobile_tx', c["cont_contacts_tel_mobile_tx"], placeholder: 'Tel mobile' %>
                                     </div>
                                 </div>
                                 <div class="col33 mob-col100">
                                     <div class="preico icofax">
-                                        <%= text_field_tag 'cont_contacts_fax_tx', c.cont_contacts_fax_tx, placeholder: 'Fax' %>
+                                        <%= text_field_tag 'cont_contacts_fax_tx', c["cont_contacts_fax_tx"], placeholder: 'Fax' %>
                                     </div>
                                 </div>
                             </div>
@@ -212,8 +212,8 @@
                             <div class="btnico icovalidbl actvalidcontact" title="Valider les modifications"></div>
                             <div class="btnico icocancelbl actcancelcontact" title="Annuler les modifications"></div>
                             <div class="btnico icodelbl actdelcontact" title="Supprimer le contact"></div>
-                            <div class="btnico icolinkbl" title="Voir la marque">
-                                <a href="marque.html"></a>
+                            <div class="btnico icolinkbl" title="Voir le contact">
+                                <a href="/marques/mask/"<%= c["mar_marques_ident_nm"] %>></a>
                             </div>
                         </div>
                     </div>
@@ -221,7 +221,7 @@
                 <div class="submitmsg"></div>
             </div>
             <% end %>
-            <% if LiensContactMarque.find_by(cont_contacts_ident_nm: c.cont_contacts_ident_nm).mar_cont_type_tx == 'Allié' %>
+            <% if c["mar_cont_type_tx"] == 'Allié' %>
             <div class="contactitem resultlist">
                 <form action="#">
                     <input type="hidden" value="" data-name="idmarque">
@@ -231,18 +231,18 @@
                                 <div class="col100">
                                     <div class="flex-grid nowrap vcenter">
                                         <div class="colcondensed mob-col100">
-                                            <div class="avatar"><img class="photo" src="media/images/avatar.jpg"></div>
+                                            <div class="avatar"><img class="photo" src="asset_path('avatar.jpg')"></div>
                                         </div>
                                         <div class="colexpanded mob-col100">
                                             <div class="flex-grid">
                                                 <div class="col100 mob-colcenter">
-                                                    <div class="profilprenom">Luc</div>
-                                                    <div class="profilnom">Varez</div>
-                                                    <div class="profilagence">T2BH</div>
+                                                    <div class="profilprenom"><%= c["cont_contacts_prenom_tx"] %></div>
+                                                    <div class="profilnom"><%= c["cont_contacts_nom_tx"] %></div>
+                                                    <div class="profilagence"><%= c["cont_contacts_societe_tx"] %></div>
                                                 </div>
                                                 <div class="col100">
                                                     <div class="noico">
-                                                        <input type="text" value="En contact avec Total depuis 1998" name="nom" placeholder="Ancienneté de la relation commerciale">
+                                                        <input type="text" value="<%= c["cont_contacts_societe_tx"] %>" name="nom" placeholder="Ancienneté de la relation commerciale">
                                                     </div>
                                                 </div>
                                             </div>
@@ -255,7 +255,8 @@
                                             <div class="projet">Connaissances sectorielle</div>
                                         </div>
                                         <div class="colexpanded">
-                                            <input type="text" name="connaissance-sectioriel" value="Energie, IT" data-reset="Energie, IT">
+                                            <!-- <input type="text" name="connaissance-sectioriel" value="Energie, IT" data-reset="Energie, IT"> -->
+                                            <%= text_field_tag 'cont_contacts_conn_secteur_tx',c["cont_contacts_conn_secteur_tx"], placeholder: 'Exemple : Energie, IT' %>
                                         </div>
                                     </div>
                                 </div>
@@ -265,7 +266,8 @@
                                             <div class="projet">Compétences métier</div>
                                         </div>
                                         <div class="colexpanded">
-                                            <input type="text" name="competances-metier" value="Communication interne, communication RH" data-reset="Communication interne, communication RH">
+                                            <!-- <input type="text" name="competances-metier" value="Communication interne, communication RH" data-reset="Communication interne, communication RH"> -->
+                                            <%= text_field_tag 'cont_contacts_comp_metiers_tx', c["cont_contacts_comp_metiers_tx"], placeholder: 'Exemple : Communication interne, communication RH' %>
                                         </div>
                                     </div>
                                 </div>
@@ -278,23 +280,23 @@
                                             <div class="flex-grid">
                                                 <div class="col100">
                                                     <div class="noico inline-block">
-                                                        <input type="checkbox" value="" name="design" id="ch11" checked>
+                                                        <input type="checkbox" value="1" name="mar_cont_design_bl" id="ch01" <%= c["mar_cont_design_bl"] ? ' checked' : '' %>>
                                                         <label for="ch11">Design</label>
                                                     </div>
                                                     <div class="noico inline-block">
-                                                        <input type="checkbox" value="" name="marketing" id="ch12" checked>
+                                                        <input type="checkbox" value="1" name="mar_cont_marketing_bl" id="ch02" <%= c["mar_cont_marketing_bl"] ? ' checked' : '' %>>
                                                         <label for="ch12">Marketing</label>
                                                     </div>
                                                     <div class="noico inline-block">
-                                                        <input type="checkbox" value="" name="communication" id="ch13" checked>
+                                                        <input type="checkbox" value="" name="mar_cont_communication_bl" id="ch03" <%= c["mar_cont_communication_bl"] ? ' checked' : '' %>>
                                                         <label for="ch13">Communication</label>
                                                     </div>
                                                     <div class="noico inline-block">
-                                                        <input type="checkbox" value="" name="eventrp" id="ch14" checked>
+                                                        <input type="checkbox" value="" name="mar_cont_event_bl" id="ch04" <%= c["mar_cont_event_bl"] ? ' checked' : '' %>>
                                                         <label for="ch14">Event/RP</label>
                                                     </div>
                                                     <div class="noico inline-block">
-                                                        <input type="checkbox" value="" name="digital" id="ch15" checked>
+                                                        <input type="checkbox" value="" name="mar_cont_digital_bl" id="ch05" <%= c["mar_cont_digital_bl"] ? ' checked' : '' %>>
                                                         <label for="ch15">Digital</label>
                                                     </div>
                                                 </div>
@@ -309,8 +311,8 @@
                             <div class="btnico icovalidbl actvalidcontact" title="Valider les modifications"></div>
                             <div class="btnico icocancelbl actcancelcontact" title="Annuler les modifications"></div>
                             <div class="btnico icodelbl actdelcontact" title="Supprimer le contact"></div>
-                            <div class="btnico icolinkbl" title="Voir le profil">
-                                <a href="profil.html"></a>
+                            <div class="btnico icolinkbl" title="Voir le contact">
+                                <a href="/contacts/edit/"<%= c["cont_contacts_ident_nm"] %>></a>
                             </div>
                         </div>
                     </div>
