@@ -5,6 +5,7 @@ class User < ApplicationRecord
       user.uid = auth.uid
       user.name = auth.info.name
       user.email = auth.info.email
+      user.photo = auth.info.image # TODO : vérifier le schéma Google
       user.oauth_token = auth.credentials.token
       user.oauth_expires_at = Time.at(auth.credentials.expires_at)
       @contact = Contact.find_by(cont_contacts_mail_tx: user.email)
@@ -17,6 +18,7 @@ class User < ApplicationRecord
           # on créée l'accès au site pour ce compte Google
           user.save!
           @contact.update(cont_contacts_googleid_tx: user.uid)
+          @contact.update(cont_contacts_photo_tx: user.photo)
         end
       end
     end

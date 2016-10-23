@@ -8,7 +8,7 @@
 section profildetail,
 ajouter class "proprietaire" pour obtenir le masque d'édition -->
         <section class="profildetail<%= @sectionclassadd %> sectionflex">
-            <div class="avatar"><img class="photo" src="<%= asset_path('avatar.jpg') %>"></div>
+            <div class="avatar"><img class="photo" src="<%= (@contact && (@contact.cont_contacts_photo_tx != '')) ? @contact.cont_contacts_photo_tx : asset_path('avatar.jpg') %>"></div>
             <div class="detail">
                 <div class="detailup">
                     <div class="detailleft">

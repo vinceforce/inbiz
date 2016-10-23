@@ -136,7 +136,7 @@ $(document).ready(function () {
       $('.profildetail.proprietaire .tools .actvalidprofil').on('click', function () {
             $('.profildetail.proprietaire').removeClass('submitatt submitok submitfail').addClass('submitatt');
             $.ajax({
-                    method: "POST",
+                    method: $('.profildetail.proprietaire form').attr('method'),
                     url: $('.profildetail.proprietaire form').attr('action'),
                     data: $('.profildetail.proprietaire form').serialize()
                 })
@@ -202,7 +202,7 @@ $(document).ready(function () {
 
         $('.page-footer-wrapper .btninnerico.invisible').removeClass('invisible');
         //upload des images
-        oMarqueDetail.find('#imgfilefield').on('change', function () {
+        oMarqueDetail.find('#image_file').on('change', function () {
             var fileList = this.files
             for (var i = 0; i < fileList.length; i++) {
                 var file = fileList[i];
@@ -232,12 +232,27 @@ $(document).ready(function () {
             var bModeCreation = ($('section.marquedetail.creation').length) ? true : false;
             console.log('bModeCreation ' + bModeCreation);
             oMarque.removeClass('submitatt submitok submitfail').addClass('submitatt');
+            // $('.marquedetail form')[0].on('submit',(function(e) {
+            $('.marquedetail form').submit();
+        }
+    });
+
+
+
+
+
+    $('.marquedetail form').on('submit',(function(e) {
+            e.preventDefault();
+            var oMarque = $('section.marquedetail.creation, section.marquedetail.proprietaire');
+            var bModeCreation = ($('section.marquedetail.creation').length) ? true : false;
+            if (oMarque.length) {
             $.ajax({
+                    cache: false,
+                    contentType: false,
+                    processData: false,
                     method: $('.marquedetail form').attr('method'),
-                    contentType: "multipart/form-data; charset=UTF-8",
-                    // dataType: "json",
                     url: $('.marquedetail form').attr('action'),
-                    data: $('.marquedetail form').serialize()
+                    data: new FormData(this)
                 })
                 .done(function (msg) {
                     oMarque.removeClass('submitatt submitok submitfail').addClass('submitok');
@@ -270,8 +285,15 @@ $(document).ready(function () {
                         $('section.marquedetail.creation, section.marquedetail.proprietaire').removeClass('submitatt submitok submitfail')
                     }, 3000);
                 });
-        }
-    });
+              }
+        }));
+
+
+
+
+
+
+
     $('.page-footer-wrapper .actannuler').on('click', function () {
         var oMarque = $('section.marquedetail.creation, section.marquedetail.proprietaire');
         if (oMarque.length) {

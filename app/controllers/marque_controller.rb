@@ -18,6 +18,8 @@ class MarqueController < ApplicationController
     @contacts_acheteurs = []
     @contacts_marque = []
     @contacts_allies = []
+    # @marquelogosrc = ActionController::Base.helpers.asset_path('ico_img_normal.png')
+    @marquelogosrc = ''
   end
 
   def list
@@ -77,6 +79,12 @@ class MarqueController < ApplicationController
       end
     end
     # TODO : remplacer boucle par une vue +++++++++++
+    if @marque.mar_marques_logo_blb
+      @marquelogosrc = "/marques/code_image/" + @marque_id
+    else
+      # @marquelogosrc = ActionController::Base.helpers.asset_path('ico_img_normal.png')
+      @marquelogosrc = ''
+    end
   end
 
   def create
@@ -126,7 +134,6 @@ class MarqueController < ApplicationController
     @par = marque_params_update
     @par["mar_marques_maj_user_tx"] = session[:user_id].to_s
     @par["mar_marques_maj_date_dt"] = Time.current()
-    @marque = Marque.find(marque_params_update["mar_marques_ident_nm"])
     if @par["mar_typ_ident_nm"] == ""
       @par["mar_typ_ident_nm"] = nil
     end
@@ -142,8 +149,16 @@ class MarqueController < ApplicationController
     if @par["mar_pays_ident_nm"] == ""
       @par["mar_pays_ident_nm"] = nil
     end
+    # @par["mar_marques_logo_tx"] = @par["mar_marques_logo_blb"] ? @par["mar_marques_logo_blb"].original_filename : ''
+    # @par["mar_marques_logo_mime_tx"] = @par["mar_marques_logo_blb"] ? @par["mar_marques_logo_blb"].content_type : ''
+    # @marque.mar_marques_logo_blb = @par["mar_marques_logo_blb"].read
+    # @marque.save
+    # @marque = Marque.find(marque_params_update["mar_marques_ident_nm"])
+    @marque = Marque.find(marque_params_update["mar_marques_ident_nm"])
     if @marque.update(@par)
-      @marque.save
+      # @marque = Marque.find(marque_params_update["mar_marques_ident_nm"])
+      # @marque.mar_marques_logo_blb = marque_params_update["mar_marques_logo_blb"].read
+      # @marque.save
       @responseJSON = {"msg":"MAJ OK","marqueId": @marque.mar_marques_ident_nm}
       respond_to do |format|
         format.html
@@ -156,18 +171,28 @@ class MarqueController < ApplicationController
     end
   end
 
+  def code_image
+    @image_data = Marque.find(params[:id])
+    @image = @image_data ? @image_data.mar_marques_logo_blb : nil
+    if @image
+      send_data(@image, :type => @image_data.mar_marques_logo_mime_tx, :filename => @image_data.mar_marques_logo_tx, :disposition => 'inline')
+    else
+      send_data(@image, :type => '', :filename => '', :disposition => 'inline')
+    end
+  end
+
   def addcontact
     redirect_to '/marques/mask/' + params["mar_marques_ident_nm"]
   end
 
   def marque_params
     params.require("mar_marques_nom_tx")
-    params.permit("mar_marques_nom_tx", "mar_sta_jur_ident_nm", "mar_sta_ident_nm", "mar_typ_ident_nm", "mar_sec_ident_nm", "mar_marques_ca_tx", "mar_marques_nb_salaries_nm", "mar_marques_adresse1_tx", "mar_marques_adresse2_tx", "mar_marques_cp_tx", "mar_marques_ville_tx", "mar_pays_ident_nm", "mar_marques_web_tx", "mar_marques_twitter_tx", "mar_marques_facebook_tx")
+    params.permit("mar_marques_nom_tx", "mar_sta_jur_ident_nm", "mar_sta_ident_nm", "mar_typ_ident_nm", "mar_sec_ident_nm", "mar_marques_ca_tx", "mar_marques_nb_salaries_nm", "mar_marques_adresse1_tx", "mar_marques_adresse2_tx", "mar_marques_cp_tx", "mar_marques_ville_tx", "mar_pays_ident_nm", "mar_marques_web_tx", "mar_marques_twitter_tx", "mar_marques_facebook_tx", "mar_marques_logo_blb", "image_file")
   end
 
   def marque_params_update
     params.require("mar_marques_nom_tx")
-    params.permit("mar_marques_ident_nm", "mar_marques_nom_tx", "mar_sta_jur_ident_nm", "mar_sta_ident_nm", "mar_typ_ident_nm", "mar_sec_ident_nm", "mar_marques_ca_tx", "mar_marques_nb_salaries_nm", "mar_marques_adresse1_tx", "mar_marques_adresse2_tx", "mar_marques_cp_tx", "mar_marques_ville_tx", "mar_pays_ident_nm", "mar_marques_web_tx", "mar_marques_twitter_tx", "mar_marques_facebook_tx")
+    params.permit("mar_marques_ident_nm", "mar_marques_nom_tx", "mar_sta_jur_ident_nm", "mar_sta_ident_nm", "mar_typ_ident_nm", "mar_sec_ident_nm", "mar_marques_ca_tx", "mar_marques_nb_salaries_nm", "mar_marques_adresse1_tx", "mar_marques_adresse2_tx", "mar_marques_cp_tx", "mar_marques_ville_tx", "mar_pays_ident_nm", "mar_marques_web_tx", "mar_marques_twitter_tx", "mar_marques_facebook_tx", "mar_marques_logo_blb", "image_file")
   end
 
 end

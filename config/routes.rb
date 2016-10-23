@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   get '/marques/mask/:id' => 'marque#edit'
   post '/marques/addcontact/' => 'marque#addcontact'
   get '/marques/:id' => 'marque#show'
+  get '/marques/code_image/:id' => 'marque#code_image'
 
   get '/contacts/addtomarque/:mar_marques_ident_nm' => 'contacts#addtomarque'
   post 'contacts/addcontact' => 'contact#addcontact'

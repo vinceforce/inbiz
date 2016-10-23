@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161017141417) do
+ActiveRecord::Schema.define(version: 20161021170723) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "unaccent"
 
   create_table "app_cont_contacts", primary_key: "cont_contacts_ident_nm", id: :bigserial, force: :cascade do |t|
     t.string   "cont_contacts_nom_tx",               limit: 50
@@ -37,6 +38,7 @@ ActiveRecord::Schema.define(version: 20161017141417) do
     t.integer  "cont_contacts_projets_realises_nm"
     t.string   "cont_contacts_civilite_tx",          limit: 20
     t.string   "cont_contacts_linkedin_tx",          limit: 255
+    t.string   "cont_contacts_photo_tx"
   end
 
   create_table "app_mar_contacts", primary_key: ["mar_marques_ident_nm", "cont_contacts_ident_nm"], force: :cascade do |t|
@@ -72,6 +74,8 @@ ActiveRecord::Schema.define(version: 20161017141417) do
     t.string   "mar_marques_facebook_tx",    limit: 255
     t.string   "mar_marques_maj_user_tx",    limit: 50
     t.datetime "mar_marques_maj_date_dt"
+    t.binary   "mar_marques_logo_blb"
+    t.string   "mar_marques_logo_mime_tx"
     t.index ["mar_pays_ident_nm"], name: "fki_marque_pays", using: :btree
     t.index ["mar_sec_ident_nm"], name: "fki_marque_secteur", using: :btree
     t.index ["mar_sta_ident_nm"], name: "fki_marque_statut", using: :btree
@@ -108,6 +112,7 @@ ActiveRecord::Schema.define(version: 20161017141417) do
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.string   "email"
+    t.string   "photo"
   end
 
   add_foreign_key "app_mar_contacts", "app_cont_contacts", column: "cont_contacts_ident_nm", primary_key: "cont_contacts_ident_nm", name: "fk_app_cont_contacts"

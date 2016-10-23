@@ -23,11 +23,11 @@ ajouter class "proprietaire" pour obtenir le masque d'édition -->
                             <div class="marquestatut <%= @marque && @marque.mar_sta_ident_nm ? @statuts.find(@marque.mar_sta_ident_nm).mar_sta_lib_tx == "non actif" ? '' : @statuts.find(@marque.mar_sta_ident_nm).mar_sta_lib_tx : '' %>"></div>
                         </div>
                         <div class="marqueform">
-                            <label class="btnuploadimg" for="imgfilefield">
-                            <img id="imgfilepreview" src="" data-reset="">
+                          <label class="btnuploadimg" for="image_file">
+                            <img id="imgfilepreview" src="<%= @marquelogosrc %>" data-reset="">
                             <div class="uploadimg"><div class="btnico icoimg"></div></div>
-                        </label>
-                          <%= file_field_tag 'mar_marques_logo_tx' %>
+                          </label>
+                          <%= file_field_tag :image_file %>
                             <%= text_field_tag 'mar_marques_nom_tx', @marque ? @marque.mar_marques_nom_tx : '', disabled: true, placeholder: 'Nom de la marque (obligatoire)' %>
                             <div>
                               <div class="styled-select"><%= select_tag "mar_sta_jur_ident_nm", options_from_collection_for_select(@statutsjuridiques, 'mar_sta_jur_ident_nm', 'mar_sta_jur_lib_tx', (@marque && @marque.mar_sta_jur_ident_nm) ? @marque.mar_sta_jur_ident_nm : nil), prompt: '-- Statut juridique --', disabled: true %></div>
@@ -527,7 +527,7 @@ ajouter class "proprietaire" pour obtenir le masque d'édition -->
                                             <div class="col100">
                                                 <div class="flex-grid nowrap vcenter">
                                                     <div class="colcondensed mob-col100">
-                                                        <div class="avatar"><img class="photo" src="<%= asset_path('avatar.jpg') %>"></div>
+                                                        <div class="avatar"><img class="photo" src="<%= c["cont_contacts_photo_tx"] %>"></div>
                                                     </div>
                                                     <div class="colexpanded mob-col100">
                                                         <div class="flex-grid">
