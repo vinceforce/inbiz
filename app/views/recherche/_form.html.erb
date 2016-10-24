@@ -1,6 +1,10 @@
-<form class="searchform" action="recherche.html">
-    <div class="rechercher">
-        <div class="fieldholder"><input class="searchfield" type="text" value=""></div>
-        <div class="btnico icorecherche fieldholder actsearch"></div>
-    </div>
-</form>
+<div class="rechercherform">
+  <%= form_tag('/recherche', method: :post, class: 'searchform') do %>
+      <div class="rechercher">
+          <div class="fieldholder">
+            <%= text_field_tag(:query, params[:query], id: "searchfield", class: 'searchfield', placeholder: 'Rechercher une marque.....') %>
+          </div>
+          <div class="btnico icorecherche fieldholder actsearch"></div>
+      </div>
+  <% end %>
+</div>

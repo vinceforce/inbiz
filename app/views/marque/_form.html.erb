@@ -16,10 +16,10 @@ ajouter class "proprietaire" pour obtenir le masque d'édition -->
                 <div class="marqueitemfixedholder">
                     <div class="marqueitem">
                         <div class="marquelogo">
-                            <a href="marque.html"><img src="<%=asset_path('logomarque.png')%>"></a>
+                            <a href="<%= @marque ? '/marques/' + @marque.mar_marques_ident_nm.to_s : '' %>"><img src="<%= @marquelogosrc %>"></a>
                         </div>
                         <div class="marqueinfo">
-                            <div class="marquenom"><a href="/marques/show/"><%= @marque ? @marque.mar_marques_nom_tx : '' %><sup><%= @marque && @marque.mar_sta_jur_ident_nm ? StatutJuridique.find(@marque.mar_sta_jur_ident_nm).mar_sta_jur_lib_tx : '' %></sup></a></div>
+                            <div class="marquenom"><a href="<%= @marque ? '/marques/' + @marque.mar_marques_ident_nm.to_s : '' %>"><%= @marque ? @marque.mar_marques_nom_tx : '' %><sup><%= @marque && @marque.mar_sta_jur_ident_nm ? StatutJuridique.find(@marque.mar_sta_jur_ident_nm).mar_sta_jur_lib_tx : '' %></sup></a></div>
                             <div class="marquestatut <%= @marque && @marque.mar_sta_ident_nm ? @statuts.find(@marque.mar_sta_ident_nm).mar_sta_lib_tx == "non actif" ? '' : @statuts.find(@marque.mar_sta_ident_nm).mar_sta_lib_tx : '' %>"></div>
                         </div>
                         <div class="marqueform">
@@ -159,7 +159,7 @@ ajouter class "proprietaire" pour obtenir le masque d'édition -->
                                   <div class="btnico icocancelbl actcancelcontact" title="Annuler les modifications"></div>
                                   <div class="btnico icodelbl actdelcontact" title="Supprimer le contact"></div>
                                   <div class="btnico icolinkbl" title="Voir la marque">
-                                      <a href="marque.html"></a>
+                                      <a href="<%= @marque ? '/marques/' + @marque.mar_marques_ident_nm.to_s : '' %>"></a>
                                   </div>
                               </div>
                             </div>
@@ -219,7 +219,7 @@ ajouter class "proprietaire" pour obtenir le masque d'édition -->
                                   <div class="btnico icocancelbl actcancelcontact" title="Annuler les modifications"></div>
                                   <div class="btnico icodelbl actdelcontact" title="Supprimer le contact"></div>
                                   <div class="btnico icolinkbl" title="Voir la marque">
-                                      <a href="marque.html"></a>
+                                      <a href="<%= @marque ? '/marques/' + @marque.mar_marques_ident_nm.to_s : '' %>"></a>
                                   </div>
                               </div>
                             </div>
@@ -308,7 +308,7 @@ ajouter class "proprietaire" pour obtenir le masque d'édition -->
                                         <div class="btnico icocancelbl actcancelcontact" title="Annuler les modifications"></div>
                                         <div class="btnico icodelbl actdelcontact" title="Supprimer le contact"></div>
                                         <div class="btnico icolinkbl" title="Voir la marque">
-                                            <a href="marque.html"></a>
+                                            <a href="<%= @marque ? '/marques/' + @marque.mar_marques_ident_nm.to_s : '' %>"></a>
                                         </div>
                                     </div>
                                 </div>
@@ -388,7 +388,7 @@ ajouter class "proprietaire" pour obtenir le masque d'édition -->
                           <div class="btnico icocancelbl actcancelcontact" title="Annuler les modifications"></div>
                           <div class="btnico icodelbl actdelcontact" title="Supprimer le contact"></div>
                           <div class="btnico icolinkbl" title="Voir la marque">
-                              <a href="marque.html"></a>
+                              <a href="<%= @marque ? '/marques/' + @marque.mar_marques_ident_nm.to_s : '' %>"></a>
                           </div>
                       </div>
                   </div>
@@ -504,7 +504,7 @@ ajouter class "proprietaire" pour obtenir le masque d'édition -->
                                         <div class="btnico icocancelbl actcancelcontact" title="Annuler les modifications"></div>
                                         <div class="btnico icodelbl actdelcontact" title="Supprimer le contact"></div>
                                         <div class="btnico icolinkbl" title="Voir le profil">
-                                            <a href="profil.html"></a>
+                                            <a href="<%= '/contacts/edit/' + @current_contact.cont_contacts_ident_nm.to_s %>"></a>
                                         </div>
                                     </div>
                                 </div>
@@ -538,7 +538,6 @@ ajouter class "proprietaire" pour obtenir le masque d'édition -->
                                                             </div>
                                                             <div class="col100">
                                                                 <div class="noico">
-                                                                    <!-- <input type="text" data-reset="" value="En contact avec Total depuis 1998" name="nom" placeholder="Ancienneté de la relation commerciale"> -->
                                                                     <%= text_field_tag 'mar_cont_relation_tx', c["mar_cont_relation_tx"], placeholder: 'Ancienneté de la relation commerciale' %>
                                                                 </div>
                                                             </div>
@@ -552,7 +551,6 @@ ajouter class "proprietaire" pour obtenir le masque d'édition -->
                                                         <div class="projet">Connaissances sectorielle</div>
                                                     </div>
                                                     <div class="colexpanded">
-                                                        <!-- <input type="text" name="connaissance-sectioriel" value="Energie, IT" data-reset="Energie, IT"> -->
                                                         <%= text_field_tag 'cont_contacts_conn_secteur_tx', c["cont_contacts_conn_secteur_tx"], placeholder: 'Exemple : Energie, IT' %>
                                                     </div>
                                                 </div>
@@ -563,7 +561,6 @@ ajouter class "proprietaire" pour obtenir le masque d'édition -->
                                                         <div class="projet">Compétences métier</div>
                                                     </div>
                                                     <div class="colexpanded">
-                                                        <!-- <input type="text" name="competances-metier" value="Communication interne, communication RH" data-reset="Communication interne, communication RH"> -->
                                                         <%= text_field_tag 'cont_contacts_comp_metiers_tx', c["cont_contacts_comp_metiers_tx"], placeholder: 'Exemple : Communication interne, communication RH' %>
                                                     </div>
                                                 </div>

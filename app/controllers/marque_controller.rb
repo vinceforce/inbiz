@@ -20,6 +20,8 @@ class MarqueController < ApplicationController
     @contacts_allies = []
     # @marquelogosrc = ActionController::Base.helpers.asset_path('ico_img_normal.png')
     @marquelogosrc = ''
+    @current_user_email = User.find(session[:user_id])["email"]
+    @current_contact = Contact.find_by(cont_contacts_mail_tx: @current_user_email)
   end
 
   def list

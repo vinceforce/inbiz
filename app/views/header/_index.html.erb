@@ -4,16 +4,7 @@
 
             <a href="/"><%= image_tag "R9-logo.png" %></a>
         </div>
-        <div class="rechercherform">
-          <%= form_tag('/recherche', method: :post, class: 'searchform') do %>
-              <div class="rechercher">
-                  <div class="fieldholder">
-                    <%= text_field_tag(:query, params[:query], id: "searchfield", class: 'searchfield', placeholder: 'Rechercher une marque.....') %>
-                  </div>
-                  <div class="btnico icorecherche fieldholder actsearch"></div>
-              </div>
-          <% end %>
-        </div>
+        <%= render 'recherche/form' %>
         <div class="menu">
           <% if current_user %>
             Signed in as <a href="/contacts/edit/<%= current_contact ? current_contact.cont_contacts_ident_nm : '' %>"><strong><%= current_user.name %></strong></a>!
