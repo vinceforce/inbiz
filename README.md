@@ -1,24 +1,15 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Cette application est une plateforme de création de contacts commerciaux, créée avec Ruby on Rails 5.0.0.1 / base PostgreSQL
 
-Things you may want to cover:
+* Création de marque
 
-* Ruby version
+* Création de contacts de marque
 
-* System dependencies
+* Authentification avec compte Google
 
-* Configuration
+* Profil R9
 
-* Database creation
+* Administration des données de référence
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* Pour déployer l'application, installer le code sur une machine linux où ROR est installé, se placerdans le répoertoire racine du projet et exécuter la commande "bundle install", puis "rails s"
