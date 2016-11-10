@@ -8,7 +8,7 @@
 
 
 # Création d'un contact pour pouvoir se connecter avec
-User.create([
+Contact.create([
   {cont_contacts_nom_tx: "Force", cont_contacts_prenom_tx: "Vincent", cont_contacts_mail_tx: "vforce@t2bh.fr"},
   {cont_contacts_nom_tx: "Beaumont", cont_contacts_prenom_tx: "Thierry", cont_contacts_mail_tx: "tbeaumont@t2bh.fr"},
   {cont_contacts_nom_tx: "Lecoeur", cont_contacts_prenom_tx: "Marc", cont_contacts_mail_tx: "mlecoeur@t2bh.fr"},
