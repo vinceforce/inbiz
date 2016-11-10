@@ -86,8 +86,8 @@ class RechercheController < ApplicationController
         @con["mar_cont_communication_bl"] = @lc["mar_cont_communication_bl"]
         @con["mar_cont_event_bl"] = @lc["mar_cont_event_bl"]
         @con["mar_cont_digital_bl"] = @lc["mar_cont_digital_bl"]
+        @contacts.push(@con)
       end
-      @contacts.push(@con)
     end
     @liensContact = LiensContactMarque.all
     # @nb_results = @marques.size + @contacts.size
