@@ -100,9 +100,10 @@ production:
   # username: dbr9user
   # password: r9inbiz*
   # database: r9_inbizz
-  port: 5432
-  host: localhost
-
-  database: InBiz_production
-  username: inbizsa
-  password: inbizsa
+  url: <%= ENV['DATABASE_URL'] %>
+  # port: 5432
+  # host: localhost
+  #
+  # database: InBiz_production
+  # username: inbizsa
+  # password: inbizsa
