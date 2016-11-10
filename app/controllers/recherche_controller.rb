@@ -8,7 +8,7 @@ class RechercheController < ApplicationController
     if @term == ""
       @marques_filtered = []
     else
-      @marques_filtered = @marques.where("unaccent(lower(mar_marques_nom_tx)) LIKE ?", "%#{@term}%")
+      @marques_filtered = @marques.where("unaccent(lower(mar_marques_nom_tx)) LIKE ?", "#{@term}%")
     end
     @arrayterms_for_autocomplete = []
     @marques_filtered.each do |m|
@@ -17,16 +17,16 @@ class RechercheController < ApplicationController
     if @term == ""
       @contacts_filtered = []
     else
-      @contacts_filtered = @contacts.where("unaccent(lower(cont_contacts_comp_metiers_tx)) LIKE ? OR unaccent(lower(cont_contacts_nom_tx)) LIKE ?", "%#{@term}%", "%#{@term}%")
+      @contacts_filtered = @contacts.where("unaccent(lower(cont_contacts_comp_metiers_tx)) LIKE ? OR unaccent(lower(cont_contacts_nom_tx)) LIKE ?", "#{@term}%", "#{@term}%")
     end
     @contacts_filtered.each do |c|
       @metiers = c.cont_contacts_comp_metiers_tx ? c.cont_contacts_comp_metiers_tx.split(",") : []
       @nom = c.cont_contacts_nom_tx
-      if @nom.include? @term
+      if @nom.mb_chars.downcase.strip.normalize.include? @term
         @arrayterms_for_autocomplete.push(@nom)
       end
       @metiers.each do |m|
-        if m.include? @term
+        if m.mb_chars.downcase.strip.normalize.include? @term
           @arrayterms_for_autocomplete.push(m)
         end
       end
@@ -78,13 +78,15 @@ class RechercheController < ApplicationController
     @contactsDB.each do |c|
       @lc = LiensContactMarque.find_by(cont_contacts_ident_nm: c.cont_contacts_ident_nm)
       @con = c.attributes
-      @con["mar_marques_ident_nm"] = @lc["mar_marques_ident_nm"]
-      @con["mar_cont_type_tx"] = @lc["mar_cont_type_tx"]
-      @con["mar_cont_design_bl"] = @lc["mar_cont_design_bl"]
-      @con["mar_cont_marketing_bl"] = @lc["mar_cont_marketing_bl"]
-      @con["mar_cont_communication_bl"] = @lc["mar_cont_communication_bl"]
-      @con["mar_cont_event_bl"] = @lc["mar_cont_event_bl"]
-      @con["mar_cont_digital_bl"] = @lc["mar_cont_digital_bl"]
+      if @lc
+        @con["mar_marques_ident_nm"] = @lc["mar_marques_ident_nm"]
+        @con["mar_cont_type_tx"] = @lc["mar_cont_type_tx"]
+        @con["mar_cont_design_bl"] = @lc["mar_cont_design_bl"]
+        @con["mar_cont_marketing_bl"] = @lc["mar_cont_marketing_bl"]
+        @con["mar_cont_communication_bl"] = @lc["mar_cont_communication_bl"]
+        @con["mar_cont_event_bl"] = @lc["mar_cont_event_bl"]
+        @con["mar_cont_digital_bl"] = @lc["mar_cont_digital_bl"]
+      end
       @contacts.push(@con)
     end
     @liensContact = LiensContactMarque.all
